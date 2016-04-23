@@ -1,7 +1,6 @@
 # Cumulus Linux Rolling Upgrade Demo - Layer 3 Example
 
 ## Introduction
-## Introduction
 This demo will show how to use Ansible, Behave and Cumulus Linux to execute fully automated rolling upgrades of a layer 3 network. Traffic will be drained and validated before a switch is upgraded. After the upgrade traffic will be brought back online, validated and the second device will be upgraded. 
 
 ## Diagrams:
