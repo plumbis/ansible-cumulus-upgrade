@@ -1,0 +1,21 @@
+---
+- hosts: leaf1
+  sudo: yes
+  tasks:
+    - name: Drain traffic. Copy Quagga maintenance config and reload quagga.
+      command: "{{item[0] | replace('%peer_group%', item[1])}}"
+      with_nested:
+        - ["cl-bgp route-map set prepend in neighbor %peer_group% ipv4 unicast",
+           "cl-bgp route-map set prepend in neighbor %peer_group% ipv6 unicast",
+           "cl-bgp route-map set prepend out neighbor %peer_group% ipv4 unicast",
+           "cl-bgp route-map set prepend out neighbor %peer_group% ipv6 unicast"]
+        - ["fabric", "servers"]
+
+    #- name: Verify traffic is drained
+    #  command: behave
+
+    #- name: Upgrade
+    #  command: reload
+    #  ignore the fact the box won't come back with a return code
+
+    # add wait_for....
