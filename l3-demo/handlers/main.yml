@@ -1,0 +1,31 @@
+---
+- name: restart quagga
+  service: name=quagga state=restarted
+
+- name: reload networking
+  shell: "service networking reload"
+  register: networking_reload
+  notify: print networking reload error
+  changed_when: "networking_reload.stderr != ''"
+
+- name: reload quagga
+  shell: "service quagga reload"
+  register: quagga_reload
+  notify: print quagga reload error
+  changed_when: "quagga_reload.stderr != ''"
+
+- name: print networking reload error
+  debug: msg="{{networking_reload.stderr}}"
+  when: networking_reload.stderr is defined
+  failed_when: "networking_reload.stderr is defined"
+
+- name: print quagga reload error
+  debug: msg="{{quagga_reload.stderr}}"
+  when: quagga_reload.stderr is defined
+  failed_when: "quagga_reload.stderr is defined"
+
+- name: restart apache
+  service: name=apache2 state=restarted
+
+- name: start clcmd_server
+  service: name=clcmd_server state=started enabled=yes
