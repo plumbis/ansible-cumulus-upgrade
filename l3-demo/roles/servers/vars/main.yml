@@ -23,6 +23,18 @@ interfaces:
     swp2:
       alias: "To leaf 4"
 
+  server3:
+    lo:
+      ipv6: "fd::3/128"
+      ipv4: "10.0.0.3/32"
+
+    swp1:
+      alias: "To leaf 5"
+
+    swp2:
+      alias: "To leaf 6"
+
+
 bgp:
 
   server1:
@@ -31,4 +43,8 @@ bgp:
 
   server2:
     asn: "65502"
+    tor_ports: ["swp1", "swp2"]
+
+  server3:
+    asn: "65503"
     tor_ports: ["swp1", "swp2"]

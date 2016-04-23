@@ -3,8 +3,8 @@
 
 groups = {
   "spines" => ["spine1", "spine2"],
-  "leafs" => ["leaf1", "leaf2", "leaf3", "leaf4"],
-  "servers" => ["server1", "server2"],
+  "leafs" => ["leaf1", "leaf2", "leaf3", "leaf4", "leaf5", "leaf6"],
+  "servers" => ["server1", "server2", "server3"],
   "network:children" => ["spines", "leafs"]
 }
 
@@ -63,12 +63,38 @@ Vagrant.configure("2") do |config|
     end
   end
   
+  config.vm.define "leaf5" do |leaf5| 
+   leaf5.vm.box = cumulus_image
+   leaf5.vm.network "private_network",  virtualbox__intnet: 'leaf5-spine1', auto_config: false
+   leaf5.vm.network "private_network",  virtualbox__intnet: 'leaf5-spine2', auto_config: false
+   leaf5.vm.network "private_network",  virtualbox__intnet: 'leaf5-server3', auto_config: false
+   leaf5.vm.host_name = "leaf5"
+   leaf5.vm.provision "ansible" do |ansible|
+     ansible.groups = groups
+     ansible.playbook = "lab.yml"
+    end
+  end
+
+  config.vm.define "leaf6" do |leaf6| 
+   leaf6.vm.box = cumulus_image
+   leaf6.vm.network "private_network",  virtualbox__intnet: 'leaf6-spine1', auto_config: false
+   leaf6.vm.network "private_network",  virtualbox__intnet: 'leaf6-spine2', auto_config: false
+   leaf6.vm.network "private_network",  virtualbox__intnet: 'leaf6-server3', auto_config: false
+   leaf6.vm.host_name = "leaf6"
+   leaf6.vm.provision "ansible" do |ansible|
+     ansible.groups = groups
+     ansible.playbook = "lab.yml"
+    end
+  end
+
   config.vm.define "spine1" do |spine1| 
    spine1.vm.box = cumulus_image
    spine1.vm.network "private_network",  virtualbox__intnet: 'leaf1-spine1', auto_config: false
    spine1.vm.network "private_network",  virtualbox__intnet: 'leaf2-spine1', auto_config: false
    spine1.vm.network "private_network",  virtualbox__intnet: 'leaf3-spine1', auto_config: false
    spine1.vm.network "private_network",  virtualbox__intnet: 'leaf4-spine1', auto_config: false
+   spine1.vm.network "private_network",  virtualbox__intnet: 'leaf5-spine1', auto_config: false
+   spine1.vm.network "private_network",  virtualbox__intnet: 'leaf6-spine1', auto_config: false
    spine1.vm.host_name = "spine1"
    spine1.vm.provision "ansible" do |ansible|
      ansible.groups = groups
@@ -82,6 +108,8 @@ Vagrant.configure("2") do |config|
    spine2.vm.network "private_network",  virtualbox__intnet: 'leaf2-spine2', auto_config: false
    spine2.vm.network "private_network",  virtualbox__intnet: 'leaf3-spine2', auto_config: false
    spine2.vm.network "private_network",  virtualbox__intnet: 'leaf4-spine2', auto_config: false
+   spine2.vm.network "private_network",  virtualbox__intnet: 'leaf5-spine2', auto_config: false
+   spine2.vm.network "private_network",  virtualbox__intnet: 'leaf6-spine2', auto_config: false
    spine2.vm.host_name = "spine2"
    spine2.vm.provision "ansible" do |ansible|
       ansible.groups = groups
@@ -106,6 +134,17 @@ Vagrant.configure("2") do |config|
    server2.vm.network "private_network",  virtualbox__intnet: 'leaf4-server2', auto_config: false
    server2.vm.host_name = "server2"
    server2.vm.provision "ansible" do |ansible|
+     ansible.groups = groups
+     ansible.playbook = "lab.yml"
+    end
+  end
+
+  config.vm.define "server3" do |server3| 
+   server3.vm.box = cumulus_image
+   server3.vm.network "private_network",  virtualbox__intnet: 'leaf5-server3', auto_config: false
+   server3.vm.network "private_network",  virtualbox__intnet: 'leaf6-server3', auto_config: false
+   server3.vm.host_name = "server3"
+   server3.vm.provision "ansible" do |ansible|
      ansible.groups = groups
      ansible.playbook = "lab.yml"
     end

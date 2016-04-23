@@ -24,7 +24,7 @@ interfaces:
       alias: "To spine 1"
 
     swp2:
-      alias: "To spine2"
+      alias: "To spine 2"
 
     swp3:
       alias: "To server 1"
@@ -38,7 +38,7 @@ interfaces:
       alias: "To spine 1"
 
     swp2:
-      alias: "To spine2"
+      alias: "To spine 2"
 
     swp3:
       alias: "To server 2"
@@ -52,10 +52,38 @@ interfaces:
       alias: "To spine 1"
 
     swp2:
-      alias: "To spine2"
+      alias: "To spine 2"
 
     swp3:
       alias: "To server 2"
+
+  leaf5:
+    lo:
+      ipv6: "fd::1:5/128"
+      ipv4: "172.16.0.5/32"
+
+    swp1:
+      alias: "To spine 1"
+
+    swp2:
+      alias: "To spine 2"
+
+    swp3:
+      alias: "To server 3"
+
+  leaf6:
+    lo:
+      ipv6: "fd::1:6/128"
+      ipv4: "172.16.0.6/32"
+
+    swp1:
+      alias: "To spine 1"
+
+    swp2:
+      alias: "To spine 2"
+
+    swp3:
+      alias: "To server 3"
 
 bgp:
 
@@ -76,5 +104,15 @@ bgp:
 
   leaf4:
     asn: "64604"
+    fabric_ports: ["swp1", "swp2"]
+    server_ports: ["swp3"]
+
+  leaf5:
+    asn: "64605"
+    fabric_ports: ["swp1", "swp2"]
+    server_ports: ["swp3"]
+
+  leaf6:
+    asn: "64606"
     fabric_ports: ["swp1", "swp2"]
     server_ports: ["swp3"]
