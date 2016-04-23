@@ -1,0 +1,47 @@
+---
+interfaces:
+
+  spine1:
+    lo:
+      ipv6: "fd::100:100/128"
+      ipv4: "172.16.100.100/32"
+
+    swp1:
+      alias: "To leaf 1"
+
+    swp2:
+      alias: "To leaf 2"
+
+    swp3:
+      alias: "To leaf 3"
+
+    swp4:
+      alias: "To leaf 4"
+
+  spine2:
+    lo:
+      ipv6: "fd::100:200/128"
+      ipv4: "172.16.100.200/32"
+
+    swp1:
+      alias: "To leaf 1"
+
+    swp2:
+      alias: "To leaf 2"
+
+    swp3:
+      alias: "To leaf 3"
+
+    swp4:
+      alias: "To leaf 4"
+
+bgp:
+
+  spine1:
+    asn: "65100"
+    fabric_ports: ["swp1", "swp2", "swp3", "swp4"]
+
+
+  spine2:
+    asn: "65200"
+    fabric_ports: ["swp1", "swp2", "swp3", "swp4"]

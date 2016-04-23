@@ -1,0 +1,34 @@
+---
+interfaces:
+
+  server1:
+    lo:
+      ipv6: "fd::1/128"
+      ipv4: "10.0.0.1/32"
+
+    swp1:
+      alias: "To leaf 1"
+
+    swp2:
+      alias: "To leaf 2"
+
+  server2:
+    lo:
+      ipv6: "fd::2/128"
+      ipv4: "10.0.0.2/32"
+
+    swp1:
+      alias: "To leaf 3"
+
+    swp2:
+      alias: "To leaf 4"
+
+bgp:
+
+  server1:
+    asn: "65501"
+    tor_ports: ["swp1", "swp2"]
+
+  server2:
+    asn: "65502"
+    tor_ports: ["swp1", "swp2"]

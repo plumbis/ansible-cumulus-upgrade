@@ -1,0 +1,29 @@
+{% set node = interfaces[ansible_hostname] -%}
+
+auto eth0
+iface eth0 inet dhcp
+
+{% for interface in node.keys() -%}
+auto {{interface}}
+{% if interface == "lo" -%}
+iface lo inet loopback
+{% else %}
+iface {{interface}}
+{% endif -%}
+{% if node[interface].ipv4 is defined %}
+  address {{node[interface].ipv4}}
+{% endif -%}
+{% if node[interface].ipv6 is defined %}
+  address {{node[interface].ipv6}}
+{% endif %}
+{% if node[interface].alias is defined %}
+  alias {{ node[interface].alias }}
+{% endif %}
+{% if node[interface].mtu is defined %}
+  mtu {{ node[interface].mtu }}
+{% endif %}
+{% if interface != "lo" %}
+  post-up ip link set promisc on dev {{interface}}
+{% endif %}
+
+{% endfor %}

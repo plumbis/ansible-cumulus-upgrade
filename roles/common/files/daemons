@@ -1,0 +1,5 @@
+#Configured via Ansible
+zebra=yes
+bgpd=yes
+ospfd=no
+ospf6d=no
