@@ -5,7 +5,11 @@ groups = {
   "spines" => ["spine1", "spine2"],
   "leafs" => ["leaf1", "leaf2", "leaf3", "leaf4", "leaf5", "leaf6"],
   "servers" => ["server1", "server2", "server3"],
-  "network:children" => ["spines", "leafs"]
+  "network:children" => ["spines", "leafs"],
+  "a-leafs" => ["leaf1", "leaf3", "leaf5"],
+  "b-leafs" => ["leaf2", "leaf4", "leaf6"],
+  "a-spines" => ["spine1"],
+  "b-spines" => ["spine2"]
 }
 
 
