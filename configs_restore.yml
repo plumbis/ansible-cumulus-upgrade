@@ -1,0 +1,24 @@
+---
+- hosts: leaf1
+  become: yes
+  tasks:
+    - name: copy ports.conf
+      copy: src=save/{{ansible_hostname}}/ports.conf dest=/etc/cumulus/
+
+    - name: copy interfaces
+      copy: src=save/{{ansible_hostname}}/interfaces dest=/etc/network/
+
+    - name: copy Quagga daemons
+      copy: src=save/{{ansible_hostname}}/daemons dest=/etc/quagga/
+
+    - name: copy Quagga conf
+      copy: src=save/{{ansible_hostname}}/Quagga.conf dest=/etc/quagga/
+
+    - name: reload switchd
+      service: name=switchd state=restarted
+
+    - name: reload networking
+      command: ifreload -a
+
+    - name: reload quagga
+      service: name=quagga state=restarted

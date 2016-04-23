@@ -1,0 +1,15 @@
+---
+- hosts: leaf1
+  become: yes
+  tasks:
+    - name: fetch ports.conf
+      fetch: dest=save/{{ansible_hostname}}/ports.conf src=/etc/cumulus/ports.conf flat=yes
+
+    - name: fetch interfaces
+      fetch: dest=save/{{ansible_hostname}}/interfaces src=/etc/network/interfaces flat=yes
+
+    - name: copy quagga daemons file
+      fetch: dest=save/{{ansible_hostname}}/daemons src=/etc/quagga/daemons flat=yes
+
+    - name: copy Quagga.conf
+      fetch: dest=save/{{ansible_hostname}}/Quagga.conf src=/etc/quagga/Quagga.conf flat=yes
