@@ -27,7 +27,7 @@ Vagrant.configure("2") do |config|
    leaf1.vm.provision "ansible" do |ansible|
     ansible.groups = groups
     #ansible.verbose = "vvv"
-    ansible.playbook = "lab.yml"
+    ansible.playbook = "provision.yml"
     end
   end
   
@@ -39,7 +39,7 @@ Vagrant.configure("2") do |config|
    leaf2.vm.host_name = "leaf2"
    leaf2.vm.provision "ansible" do |ansible|
     ansible.groups = groups
-    ansible.playbook = "lab.yml"
+    ansible.playbook = "provision.yml"
     end
   end
 
@@ -51,7 +51,7 @@ Vagrant.configure("2") do |config|
    leaf3.vm.host_name = "leaf3"
    leaf3.vm.provision "ansible" do |ansible|
      ansible.groups = groups
-     ansible.playbook = "lab.yml"
+     ansible.playbook = "provision.yml"
     end
   end
 
@@ -63,7 +63,7 @@ Vagrant.configure("2") do |config|
    leaf4.vm.host_name = "leaf4"
    leaf4.vm.provision "ansible" do |ansible|
      ansible.groups = groups
-     ansible.playbook = "lab.yml"
+     ansible.playbook = "provision.yml"
     end
   end
   
@@ -75,7 +75,7 @@ Vagrant.configure("2") do |config|
    leaf5.vm.host_name = "leaf5"
    leaf5.vm.provision "ansible" do |ansible|
      ansible.groups = groups
-     ansible.playbook = "lab.yml"
+     ansible.playbook = "provision.yml"
     end
   end
 
@@ -87,7 +87,7 @@ Vagrant.configure("2") do |config|
    leaf6.vm.host_name = "leaf6"
    leaf6.vm.provision "ansible" do |ansible|
      ansible.groups = groups
-     ansible.playbook = "lab.yml"
+     ansible.playbook = "provision.yml"
     end
   end
 
@@ -102,7 +102,7 @@ Vagrant.configure("2") do |config|
    spine1.vm.host_name = "spine1"
    spine1.vm.provision "ansible" do |ansible|
      ansible.groups = groups
-     ansible.playbook = "lab.yml"
+     ansible.playbook = "provision.yml"
     end
   end
 
@@ -117,7 +117,7 @@ Vagrant.configure("2") do |config|
    spine2.vm.host_name = "spine2"
    spine2.vm.provision "ansible" do |ansible|
       ansible.groups = groups
-      ansible.playbook = "lab.yml"
+      ansible.playbook = "provision.yml"
     end
   end
 
@@ -128,7 +128,7 @@ Vagrant.configure("2") do |config|
    server1.vm.host_name = "server1"
    server1.vm.provision "ansible" do |ansible|
      ansible.groups = groups
-     ansible.playbook = "lab.yml"
+     ansible.playbook = "provision.yml"
     end
   end
   
@@ -139,7 +139,7 @@ Vagrant.configure("2") do |config|
    server2.vm.host_name = "server2"
    server2.vm.provision "ansible" do |ansible|
      ansible.groups = groups
-     ansible.playbook = "lab.yml"
+     ansible.playbook = "provision.yml"
     end
   end
 
@@ -150,7 +150,7 @@ Vagrant.configure("2") do |config|
    server3.vm.host_name = "server3"
    server3.vm.provision "ansible" do |ansible|
      ansible.groups = groups
-     ansible.playbook = "lab.yml"
+     ansible.playbook = "provision.yml"
     end
   end
 
