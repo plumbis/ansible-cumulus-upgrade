@@ -7,7 +7,7 @@ This demo will show how to use Ansible, Behave and Cumulus Linux to execute full
 ## Diagrams:
 The topology for this demo can be seen here.
 ![Diagram](diagram.png)
-[//]: # "Test comment"
+[//]: # " Diagram located at: https://docs.google.com/drawings/d/1tJb29fmmuxDJkbvayKu68Vxj_D6sQVd71bVuh-17R5E/edit"
 
 ## Routing
 Each host is running [Cumulus Quagga](https://support.cumulusnetworks.com/hc/en-us/articles/216805858) and using [BGP unnumbered](https://docs.cumulusnetworks.com/display/DOCS/Configuring+Border+Gateway+Protocol+-+BGP#ConfiguringBorderGatewayProtocol-BGP-unnumberedUsingBGPUnnumberedInterfaces) to both leaf switches.
