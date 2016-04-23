@@ -2,6 +2,11 @@
 - hosts: leaf1
   sudo: yes
   tasks:
+    # The reason for using cl-bgp commands instead of using a Quagga template
+    # Is because then two quagga templates will have to be maintained
+    # Probably a good candidate for a module, but this works for now.
+    # A smarter way to do this would be to load from Vars file to identify
+    # the names of the peer-groups. Again, good enough for proof of concept
     - name: Drain traffic. Copy Quagga maintenance config and reload quagga.
       command: "{{item[0] | replace('%peer_group%', item[1])}}"
       with_nested:
