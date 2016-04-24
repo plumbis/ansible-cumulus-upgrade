@@ -5,14 +5,14 @@
 
 # - name: fetch ports.conf
 #   fetch:
-#     dest=roles/leafs/{{ansible_hostname}}/ports.conf
+#     dest=roles/spines/{{ansible_hostname}}/ports.conf
 #     src=/etc/cumulus/ports.conf
 #     flat=yes
 #   when: prepend_count.stdout | int < 3
 
 # - name: fetch interfaces
 #   fetch:
-#     dest=roles/leafs/{{ansible_hostname}}/interfaces
+#     dest=roles/spines/{{ansible_hostname}}/interfaces
 #     src=/etc/network/interfaces
 #     flat=yes
 #   when: prepend_count.stdout | int < 3
@@ -20,7 +20,7 @@
 
 # - name: copy quagga daemons file
 #   fetch:
-#     dest=roles/leafs/{{ansible_hostname}}/daemons
+#     dest=roles/spines/{{ansible_hostname}}/daemons
 #     src=/etc/quagga/daemons
 #     flat=yes
 #   when: prepend_count.stdout | int < 3
@@ -28,7 +28,7 @@
 
 # - name: copy Quagga.conf
 #   fetch:
-#     dest=roles/leafs/{{ansible_hostname}}/Quagga.conf
+#     dest=roles/spines/{{ansible_hostname}}/Quagga.conf
 #     src=/etc/quagga/Quagga.conf
 #     flat=yes
 #   when: prepend_count.stdout | int < 3
@@ -45,7 +45,7 @@
        "cl-bgp route-map set prepend in neighbor %peer_group% ipv6 unicast",
        "cl-bgp route-map set prepend out neighbor %peer_group% ipv4 unicast",
        "cl-bgp route-map set prepend out neighbor %peer_group% ipv6 unicast"]
-    - ["fabric", "servers"]
+    - ["fabric"]
   when: prepend_count.stdout | int < 3
 
 - name: Save Quagga Config
@@ -61,7 +61,7 @@
   poll: 0
   ignore_errors: true
 
-- name: Waiting for leafs to restore. Please stand by...
+- name: Waiting for spines to restore. Please stand by...
   local_action:
     wait_for
     host={{ansible_ssh_host}}
@@ -70,26 +70,26 @@
   sudo: False
 
 - name: load vars
-  include_vars: roles/leafs/vars/main.yml
+  include_vars: roles/spines/vars/main.yml
 
 - name: Copy Quagga Configuration
   template:
-    src=roles/leafs/templates/Quagga.conf.j2
+    src=roles/spines/templates/Quagga.conf.j2
     dest=/etc/quagga/Quagga.conf
   notify: reload quagga
 
 # - name: copy ports.conf
-#   copy: src=roles/leafs/{{ansible_hostname}}/ports.conf dest=/etc/cumulus/
+#   copy: src=roles/spines/{{ansible_hostname}}/ports.conf dest=/etc/cumulus/
 #   notify: restart switchd
 
 # - name: copy interfaces
-#   copy: src=roles/leafs/{{ansible_hostname}}/interfaces dest=/etc/network/
+#   copy: src=roles/spines/{{ansible_hostname}}/interfaces dest=/etc/network/
 #   notify: reload networking
 
 # - name: copy Quagga daemons
-#   copy: src=roles/leafs/{{ansible_hostname}}/daemons dest=/etc/quagga/
+#   copy: src=roles/spines/{{ansible_hostname}}/daemons dest=/etc/quagga/
 #   notify: restart quagga
 
 # - name: copy Quagga conf
-#   copy: src=roles/leafs/{{ansible_hostname}}/Quagga.conf dest=/etc/quagga/
+#   copy: src=roles/spines/{{ansible_hostname}}/Quagga.conf dest=/etc/quagga/
 #   notify: reload quagga
