@@ -4,7 +4,14 @@
 
 {### Set the logging and save all the config in Quagga.conf file ###}
 log file /var/log/quagga/quagga.log
+username cumulus nopassword
 service integrated-vtysh-config
+!
+interface lo
+ link-detect
+!
+interface eth0
+ link-detect
 !
 {### Configure the fabric ports IPv6 settings for unnumbered operation ###}
 {% for interface in bgpvars.fabric_ports -%}
