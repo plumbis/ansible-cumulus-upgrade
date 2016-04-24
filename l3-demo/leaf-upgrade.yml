@@ -2,12 +2,16 @@
 - hosts: leaf1
   sudo: yes
   tasks:
+    - name: Check if route map is applied
+      shell: vtysh -c "show run" | grep prepend | wc -l
+      register: prepend_count
+
     # The reason for using cl-bgp commands instead of using a Quagga template
     # Is because then two quagga templates will have to be maintained
     # Probably a good candidate for a module, but this works for now.
     # A smarter way to do this would be to load from Vars file to identify
     # the names of the peer-groups. Again, good enough for proof of concept
-    - name: Drain traffic. Copy Quagga maintenance config and reload quagga.
+    - name: Apply route maps to drain traffic
       command: "{{item[0] | replace('%peer_group%', item[1])}}"
       with_nested:
         - ["cl-bgp route-map set prepend in neighbor %peer_group% ipv4 unicast",
@@ -15,12 +19,8 @@
            "cl-bgp route-map set prepend out neighbor %peer_group% ipv4 unicast",
            "cl-bgp route-map set prepend out neighbor %peer_group% ipv6 unicast"]
         - ["fabric", "servers"]
+      when: prepend_count.stdout | int < 3
 
-    #- name: Verify traffic is drained
-    #  command: behave
-
-    #- name: Upgrade
-    #  command: reload
-    #  ignore the fact the box won't come back with a return code
-
-    # add wait_for....
+    - name: Verify traffic is drained. This will take a moment...
+      interface_stats: 
+    
