@@ -1,6 +1,8 @@
 ---
 - hosts: leaf1
   sudo: yes
+  handlers:
+    - include: handlers/main.yml
   tasks:
     - name: Check if route map is applied
       shell: vtysh -c "show run" | grep prepend | wc -l
@@ -21,6 +23,34 @@
         - ["fabric", "servers"]
       when: prepend_count.stdout | int < 3
 
+    - name: Save Quagga Config
+      command: sudo cl-rctl write-config integrated
+      when: prepend_count.stdout | int < 3      
+
     - name: Verify traffic is drained. This will take a moment...
-      interface_stats: 
+      interface_stats:
+
+    - name: Reboot!
+      shell: sleep 2 && shutdown -r now "Ansible reboot triggered"
+      async: 1
+      poll: 0
+      ignore_errors: true
+
+    - name: Waiting for server to restore. Please stand by...
+      local_action:
+        wait_for
+        host={{ansible_ssh_host}}
+        port={{ ansible_ssh_port }}
+        delay=60
+      sudo: False
+
+    - name: load vars
+      include_vars: roles/leafs/vars/main.yml
+
+    - name: Copy Quagga Configuration
+      template: src=roles/leafs/templates/Quagga.conf.j2 dest=/etc/quagga/Quagga.conf
+      notify: reload quagga
+
+
+
     
