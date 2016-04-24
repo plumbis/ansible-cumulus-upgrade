@@ -33,8 +33,6 @@
 #     flat=yes
 #   when: prepend_count.stdout | int < 3
 
-
-
 # The reason for using cl-bgp commands instead of using a Quagga template
 # Is because then two quagga templates will have to be maintained
 # Probably a good candidate for a module, but this works for now.
@@ -52,7 +50,7 @@
 
 - name: Save Quagga Config
   command: sudo cl-rctl write-config integrated
-  when: prepend_count.stdout | int < 3      
+  when: prepend_count.stdout | int < 3
 
 - name: Verify traffic is drained. This will take a moment...
   interface_stats:
@@ -75,7 +73,9 @@
   include_vars: roles/leafs/vars/main.yml
 
 - name: Copy Quagga Configuration
-  template: src=roles/leafs/templates/Quagga.conf.j2 dest=/etc/quagga/Quagga.conf
+  template:
+    src=roles/leafs/templates/Quagga.conf.j2
+    dest=/etc/quagga/Quagga.conf
   notify: reload quagga
 
 # - name: copy ports.conf
@@ -93,7 +93,3 @@
 # - name: copy Quagga conf
 #   copy: src=roles/leafs/{{ansible_hostname}}/Quagga.conf dest=/etc/quagga/
 #   notify: reload quagga
-
-
-
-    
