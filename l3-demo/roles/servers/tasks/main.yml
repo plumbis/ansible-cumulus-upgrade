@@ -9,8 +9,8 @@
   apt_repository:
     repo='deb http://ftp.us.debian.org/debian/ wheezy main contrib non-free'
 
-- name: Install iPerf
-  apt: name=iperf update_cache=yes
+- name: Install MTR
+  apt: name=mtr-tiny update_cache=yes
 
 - name: Copy /etc/network/interfaces
   template: src=interfaces.j2 dest=/etc/network/interfaces
