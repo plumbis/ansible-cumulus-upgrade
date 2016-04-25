@@ -23,7 +23,7 @@ For the spine devices, the same principals will be used, but on a single spine a
 ### Staging the Upgrade
 Before the upgrade is executed, all A devices will use BGP AS Path prepending to force all traffic both from the spines as well as the servers to prefer the B switch. 
 
-Utilizing [Behave](https://pythonhosted.org/behave/) testing, each A device will be checked that no traffic is flowing before any intrusive changes are made.
+A python script, packaged into an Ansible module, will execute on each node and validate that no traffic is flowing through the device before any intrusive changes are made.
 
 ### Executing the Change
 In this virtual environment the upgrade will be simulated via the `reboot` command. In a production environment a software upgrade would execute in an identical manner.

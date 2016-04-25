@@ -34,7 +34,7 @@ To build a Behave test the natural langauge test is written in `/validation/test
 The following are a list of required software to run this project.
 * **[Vagrant](https://www.vagrantup.com/)**
 * **[VirtualBox](https://www.virtualbox.org/wiki/Downloads)**
-* **[Ansible](http://ansible.com)**
+* **[Ansible](http://ansible.com)** - Specifically Ansible 1.9. Ansible 2.0 will break the behave validation checking.
 * **[Yamllint](https://pypi.python.org/pypi/yamllint)** - an open source python script that will validate YAML files for proper syntax. `pip install yamllint` 
 * **[Behave](https://pythonhosted.org/behave/install.html)**
 
