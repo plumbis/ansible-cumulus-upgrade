@@ -2,6 +2,10 @@ from behave import *
 import ansible.runner
 import yaml
 import json
+import subprocess
+import time
+import shutil
+import os
 
 '''
     Scenario: Check BGP Neighbors
@@ -23,6 +27,50 @@ server_bgp_neighbor_config = dict()
 list_of_leafs = []
 list_of_spines = []
 list_of_servers = []
+
+def run_ansible_command(context, ansible_group_list, command):
+    '''
+    Takes in a list of ansible nodes and a command 
+    and executes an ansible ad hoc command.
+
+    In Ansible 2.0 the Ansible API no longer uses ansible.runner()
+    Ansible has also stated that the Ansible API may change at any time.
+    To prevent bad things from happening this is implemented with 
+    ad hoc commands on the local machine.
+
+    Also, Ansible can only return structured data for ad hoc commands with the 
+    --tree argument which only writes to a file.
+
+    Consumes list and string.
+    Returns dict of json output
+    ''' 
+
+    timestamp = time.time()
+
+    directory_name = ".behave_ansible_" + str(timestamp)
+    node_string = ":".join(ansible_group_list)
+    command = ["ansible", node_string, "-a", command, "--sudo", "--tree", directory_name]
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+    stdout, stderr = process.communicate()
+    if stderr:
+        assert False, "\nCommand: " + " ".join(command) + "\n" + "Ansible Error: " + stderr
+    else:
+
+        node_output = dict()
+
+        for file in os.listdir(directory_name):
+
+            with open(directory_name + "/" + file) as data_file:
+                data = json.load(data_file)
+
+            node_output[file] = data
+
+        shutil.rmtree(directory_name)
+        return node_output
+
+    shutil.rmtree(directory_name)
+    assert False, "Error in run_ansible_command. Not sure how we got here."
 
 def get_spine_vars(context):
     '''
@@ -77,22 +125,11 @@ def get_server_vars(context):
 
 def get_spine_bgp_neighbors(context):
     ''' 
-    Make Ansible API call to pull data directly from the node.
-    Return data in json format
+    Pull the BGP neighbor configuration directly from the devices
     '''
     global spine_bgp_neighbor_config
 
-    runner = ansible.runner.Runner(module_name='command', 
-                                   module_args="cl-bgp summary show json",
-                                   become=True, pattern=list_of_spines)
-
-    ansible_output = runner.run()
-
-    if ansible_output is None:
-        assert False, "Ansible is unable to contact the host"
-
-    spine_bgp_neighbor_config = ansible_output["contacted"]
-
+    spine_bgp_neighbor_config = run_ansible_command(context, list_of_spines, "cl-bgp summary show json")
 
 def get_leaf_bgp_neighbors(context):
     ''' 
@@ -101,17 +138,7 @@ def get_leaf_bgp_neighbors(context):
     '''
     global leaf_bgp_neighbor_config
 
-    runner = ansible.runner.Runner(module_name='command', 
-                                   module_args="cl-bgp summary show json",
-                                   become=True, pattern=list_of_leafs)
-
-    ansible_output = runner.run()
-
-    if ansible_output is None:
-        assert False, "Ansible is unable to contact the host"
-
-    leaf_bgp_neighbor_config = ansible_output["contacted"]
-
+    leaf_bgp_neighbor_config = run_ansible_command(context, list_of_leafs, "cl-bgp summary show json")
 
 def get_server_bgp_neighbors(context):
     ''' 
@@ -120,16 +147,7 @@ def get_server_bgp_neighbors(context):
     '''
     global server_bgp_neighbor_config
 
-    runner = ansible.runner.Runner(module_name='command', 
-                                   module_args="cl-bgp summary show json",
-                                   become=True, pattern=list_of_servers)
-
-    ansible_output = runner.run()
-
-    if ansible_output is None:
-        assert False, "Ansible is unable to contact the host"
-
-    server_bgp_neighbor_config = ansible_output["contacted"]
+    server_bgp_neighbor_config = run_ansible_command(context, list_of_servers, "cl-bgp summary show json")
 
 
 def get_spine_config_ports(context):
