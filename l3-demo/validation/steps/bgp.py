@@ -49,7 +49,7 @@ def run_ansible_command(context, ansible_group_list, command):
 
     directory_name = ".behave_ansible_" + str(timestamp)
     node_string = ":".join(ansible_group_list)
-    command = ["ansible", node_string, "-a", command, "--sudo", "--tree", directory_name]
+    command = ["ansible", node_string, "-a", command, "--become", "--tree", directory_name]
     process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     stdout, stderr = process.communicate()
@@ -71,6 +71,7 @@ def run_ansible_command(context, ansible_group_list, command):
 
     shutil.rmtree(directory_name)
     assert False, "Error in run_ansible_command. Not sure how we got here."
+
 
 def get_spine_vars(context):
     '''
