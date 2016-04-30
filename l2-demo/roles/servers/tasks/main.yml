@@ -1,14 +1,4 @@
 ---
-- name: Disable AAAA DNS lookups
-  replace:
-    dest=/etc/gai.conf
-    regexp="#precedence ::ffff:0:0/96  10"
-    replace="precedence ::ffff:0:0/96  100"
-
-- name: Add Debian Apt Sources
-  apt_repository:
-    repo='deb http://ftp.us.debian.org/debian/ wheezy main contrib non-free'
-
 - name: Install MTR
   apt: name=mtr-tiny update_cache=yes
 
