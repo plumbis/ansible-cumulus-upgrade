@@ -1,7 +1,10 @@
 from behave import *
-import ansible.runner
 import yaml
 import json
+import subprocess
+import time
+import shutil
+import os
 
 '''
     Scenario: Check BGP Neighbors
@@ -25,6 +28,50 @@ server_vars = dict()
 list_of_leafs = []
 list_of_spines = []
 list_of_servers = []
+
+def run_ansible_command(context, ansible_group_list, command):
+    '''
+    Takes in a list of ansible nodes and a command 
+    and executes an ansible ad hoc command.
+
+    In Ansible 2.0 the Ansible API no longer uses ansible.runner()
+    Ansible has also stated that the Ansible API may change at any time.
+    To prevent bad things from happening this is implemented with 
+    ad hoc commands on the local machine.
+
+    Also, Ansible can only return structured data for ad hoc commands with the 
+    --tree argument which only writes to a file.
+
+    Consumes list and string.
+    Returns dict of json output
+    ''' 
+
+    timestamp = time.time()
+
+    directory_name = ".behave_ansible_" + str(timestamp)
+    node_string = ":".join(ansible_group_list)
+    command = ["ansible", node_string, "-a", command, "--become", "--tree", directory_name]
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+    stdout, stderr = process.communicate()
+    if stderr:
+        assert False, "\nCommand: " + " ".join(command) + "\n" + "Ansible Error: " + stderr
+    else:
+
+        node_output = dict()
+
+        for file in os.listdir(directory_name):
+
+            with open(directory_name + "/" + file) as data_file:
+                data = json.load(data_file)
+
+            node_output[file] = data
+
+        shutil.rmtree(directory_name)
+        return node_output
+
+    shutil.rmtree(directory_name)
+    assert False, "Error in run_ansible_command. Not sure how we got here."
 
 
 def get_spine_vars(context):
@@ -85,17 +132,7 @@ def get_spine_interfaces(context):
     '''
     global spine_interface_config
 
-    runner = ansible.runner.Runner(module_name='command', 
-                                   module_args="netshow interface all -j",
-                                   become=True, pattern=list_of_spines)
-
-    ansible_output = runner.run()
-
-    if ansible_output is None:
-        assert False, "Ansible is unable to contact a spine"
-
-    spine_interface_config = ansible_output["contacted"]
-
+    spine_interface_config = run_ansible_command(context, list_of_spines, "netshow interface all -j")
 
 def get_leaf_interfaces(context):
     ''' 
@@ -104,17 +141,7 @@ def get_leaf_interfaces(context):
     '''
     global leaf_interface_config
 
-    runner = ansible.runner.Runner(module_name='command', 
-                                   module_args="netshow interface all -j",
-                                   become=True, pattern=list_of_leafs)
-
-    ansible_output = runner.run()
-
-    if ansible_output is None:
-        assert False, "Ansible is unable to contact a leaf"
-
-    leaf_interface_config = ansible_output["contacted"]
-
+    leaf_interface_config = run_ansible_command(context, list_of_leafs, "netshow interface all -j")
 
 def get_server_interfaces(context):
     ''' 
@@ -123,16 +150,7 @@ def get_server_interfaces(context):
     '''
     global server_interface_config
 
-    runner = ansible.runner.Runner(module_name='command', 
-                                   module_args="netshow interface all -j",
-                                   become=True, pattern=list_of_servers)
-
-    ansible_output = runner.run()
-
-    if ansible_output is None:
-        assert False, "Ansible is unable to contact a server"
-
-    server_interface_config = ansible_output["contacted"]
+    server_interface_config = run_ansible_command(context, list_of_servers, "netshow interface all -j")
 
 
 @given('an interface is configured')

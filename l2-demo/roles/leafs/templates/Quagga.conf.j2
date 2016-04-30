@@ -4,13 +4,21 @@
 
 {### Set the logging and save all the config in Quagga.conf file ###}
 log file /var/log/quagga/quagga.log
+username cumulus nopassword
 service integrated-vtysh-config
+!
+interface lo
+ link-detect
+!
+interface eth0
+ link-detect
 !
 {### Configure the fabric ports IPv6 settings for unnumbered operation ###}
 {% for interface in bgpvars.fabric_ports -%}
 interface {{interface}}
  no ipv6 nd suppress-ra
  ipv6 nd ra-interval 3
+ link-detect
 !
 {% endfor %}
 {### Configure the server ports IPv6 settings for unnumbered operation ###}
@@ -70,8 +78,10 @@ router bgp {{ bgpvars.asn }}
 !
  exit-address-family
 !
+route-map prepend permit 10
+ set as-path prepend {{ bgpvars.asn }} {{ bgpvars.asn }} {{ bgpvars.asn }} {{ bgpvars.asn }} 
+!
 ip forwarding
 !
 line vty
 !
-end

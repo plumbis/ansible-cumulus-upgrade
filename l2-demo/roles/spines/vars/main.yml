@@ -18,6 +18,12 @@ interfaces:
     swp4:
       alias: "To leaf 4"
 
+    swp5:
+      alias: "To leaf 5"
+
+    swp6:
+      alias: "To leaf 6"
+
   spine2:
     lo:
       ipv6: "fd::100:200/128"
@@ -35,13 +41,19 @@ interfaces:
     swp4:
       alias: "To leaf 4"
 
+    swp5:
+      alias: "To leaf 5"
+
+    swp6:
+      alias: "To leaf 6"
+
 bgp:
 
   spine1:
     asn: "65100"
-    fabric_ports: ["swp1", "swp2", "swp3", "swp4"]
+    fabric_ports: ["swp1", "swp2", "swp3", "swp4", "swp5", "swp6"]
 
 
   spine2:
     asn: "65200"
-    fabric_ports: ["swp1", "swp2", "swp3", "swp4"]
+    fabric_ports: ["swp1", "swp2", "swp3", "swp4", "swp5", "swp6"]

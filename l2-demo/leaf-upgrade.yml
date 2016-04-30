@@ -1,0 +1,14 @@
+---
+- hosts: a-leafs
+  become: yes
+  tasks:
+    - include: roles/leafs/tasks/upgrade.yml
+  handlers:
+    - include: handlers/main.yml
+
+- hosts: b-leafs
+  become: yes
+  tasks:
+    - include: roles/leafs/tasks/upgrade.yml
+  handlers:
+    - include: handlers/main.yml

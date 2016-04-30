@@ -1,0 +1,14 @@
+---
+- hosts: a-spines
+  become: yes
+  tasks:
+    - include: roles/spines/tasks/upgrade.yml
+  handlers:
+    - include: handlers/main.yml
+
+- hosts: b-spines
+  become: yes
+  tasks:
+    - include: roles/spines/tasks/upgrade.yml
+  handlers:
+    - include: handlers/main.yml

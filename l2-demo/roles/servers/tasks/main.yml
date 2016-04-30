@@ -9,12 +9,8 @@
   apt_repository:
     repo='deb http://ftp.us.debian.org/debian/ wheezy main contrib non-free'
 
-- name: Install Apache
-  apt: name=apache2 update_cache=yes
-  notify: restart apache
-
-- name: Install Curl
-  apt: name=curl update_cache=yes
+- name: Install MTR
+  apt: name=mtr-tiny update_cache=yes
 
 - name: Copy /etc/network/interfaces
   template: src=interfaces.j2 dest=/etc/network/interfaces
@@ -23,9 +19,3 @@
 - name: Copy Quagga Configuration
   template: src=Quagga.conf.j2 dest=/etc/quagga/Quagga.conf
   notify: reload quagga
-
-- name: Install Python Pip
-  apt: name=python-pip update_cache=yes
-
-- name: Install httplib2
-  command: "pip install httplib2"
