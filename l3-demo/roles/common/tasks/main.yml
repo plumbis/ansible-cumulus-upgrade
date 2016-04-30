@@ -9,6 +9,9 @@
   apt_repository:
     repo='deb http://ftp.us.debian.org/debian/ wheezy main contrib non-free'
 
+- name: Install FPing
+  apt: name=fping update_cache=yes
+
 - name: Copy Quagga daemons file
   copy: src=daemons dest=/etc/quagga/daemons backup=yes
   notify: restart quagga
