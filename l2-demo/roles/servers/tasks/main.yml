@@ -1,7 +1,4 @@
 ---
-- name: Install MTR
-  apt: name=mtr-tiny update_cache=yes
-
 - name: Copy /etc/network/interfaces
   template: src=interfaces.j2 dest=/etc/network/interfaces
   notify: reload networking
