@@ -1,19 +1,17 @@
-# Cumulus Linux Rolling Upgrade Demo - Layer 3 Example
+# Cumulus Linux Rolling Upgrade Demo - Layer 2 Example
 
 ## Introduction
-This demo will show how to use Ansible, Behave and Cumulus Linux to execute fully automated rolling upgrades of a layer 3 network. Traffic will be drained and validated before a switch is upgraded. After the upgrade traffic will be brought back online, validated and the second device will be upgraded. 
+This demo will show how to use Ansible, Behave and Cumulus Linux to execute fully automated rolling upgrades of a layer 2 MLAG network. Traffic will be drained and validated before a switch is upgraded. After the upgrade traffic will be brought back online, validated and the second device will be upgraded. 
 
 ## Network Diagram:
 The topology for this demo can be seen here.
 ![Diagram](diagram.png)
 [//]: # " Diagram located at: https://docs.google.com/drawings/d/1f7YIGF2dTdaFvvdVucxaEv-kGkqJrdd_Z-Xt38xARDk/edit"
 
-## Routing
-Each host is running [Cumulus Quagga](https://support.cumulusnetworks.com/hc/en-us/articles/216805858) and using [BGP unnumbered](https://docs.cumulusnetworks.com/display/DOCS/Configuring+Border+Gateway+Protocol+-+BGP#ConfiguringBorderGatewayProtocol-BGP-unnumberedUsingBGPUnnumberedInterfaces) to both leaf switches.
+## Connectivity
+Each host is using [Multi-Chassis Link Aggregation (MLAG)](https://docs.cumulusnetworks.com/display/DOCS/Multi-Chassis+Link+Aggregation+-+MLAG) to both leaf switches. All leaf switches are using MLAG to the spine layer. 
 
-Each host is receiving a default route from both leaf switches. The host will use ECMP routing to load share between both leaf switches. 
-
-Between spines and leafs is eBGP unnumbered. 
+Each device is using LACP and STP. MLAG peers will be using peerlinks and backup links as to avoid split brain issues. To drain the B side for the initial upgrade, the peerlinks will be disabled to switch traffic over to the A side exclusively.
 
 ## The Upgrade Process
 Each server is connected to two leafs. The leftmost leaf will be considered to be in an "A" group. The rightmost leaf will be considered to be in a "B" group. The upgrade process will be on a datacenter wide basis, meaning all "A" switches will be run in parallel, and the same for all "B" switches.
