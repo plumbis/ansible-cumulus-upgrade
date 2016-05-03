@@ -1,5 +1,5 @@
 ---
-- hosts: network:children
+- hosts: network
   become: yes
   tasks:
     - name: fetch ports.conf
