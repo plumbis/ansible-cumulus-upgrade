@@ -1,0 +1,20 @@
+---
+- include: cleanup-for-clag.yml
+
+- include: leaf-setup.yml
+  vars:
+    v_file: "group_vars/all/main.yml"
+
+- include: host-networking.yml
+  vars:
+    v_file: "group_vars/all/main.yml"
+
+- hosts: networking
+  user: vagrant
+  sudo: yes
+  roles:
+    - switch_clag
+  vars_files:
+    - group_vars/all/main.yml
+  handlers:
+    - include : handlers/main.yml

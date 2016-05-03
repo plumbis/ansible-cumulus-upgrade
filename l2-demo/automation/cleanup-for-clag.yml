@@ -1,0 +1,16 @@
+- hosts: networking
+  user: vagrant
+  sudo: yes
+  tasks:
+    - name: clean up spines for from CLAG to unnumbered
+      file: path=/etc/network/interfaces.d/{{ item }} state=absent
+      with_items:
+        - swp1
+        - swp2
+        - swp3
+        - swp4
+        - swp5
+        - swp6
+        - lo
+    - name: reload networking
+      service: name=networking state=reloaded

@@ -1,0 +1,9 @@
+- hosts: leaf
+  user: vagrant
+  sudo: yes
+  roles:
+    - leaf_networking
+  vars_files:
+    - "{{ v_file }}"
+  handlers:
+    - include : handlers/main.yml

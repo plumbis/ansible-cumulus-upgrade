@@ -1,0 +1,201 @@
+
+interfaces:
+  spine1:
+    bridges:
+      - name: "br0"
+        members: ["peerlink", "bond1", "bond2", "bond3"]
+    peerlink:
+      - name: "peerlink"
+        members: ["swp7", "swp8"]
+        clag_ip: "169.254.254.1"
+    bond1:
+      - name: "bond1"
+        members: ["swp1", "swp2"]
+        clag_id: "1"
+    bond2:
+      - name: "bond2"
+        members: ["swp3", "swp4"]
+        clag_id: "2"
+    bond3:
+      - name: "bond3"
+        members: ["swp5", "swp6"]
+        clag_id: "3"
+  spine2:
+    bridges:
+      - name: "br0"
+        members: ["peerlink", "bond1", "bond2", "bond3"]
+    peerlink:
+      - name: "peerlink"
+        members: ["swp7", "swp8"]
+        clag_ip: "169.254.254.2"
+    bond1:
+      - name: "bond1"
+        members: ["swp1", "swp2"]
+        clag_id: "1"
+    bond2:
+      - name: "bond2"
+        members: ["swp3", "swp4"]
+        clag_id: "2"
+    bond3:
+      - name: "bond3"
+        members: ["swp5", "swp6"]
+        clag_id: "3"
+  leaf1:
+    bridges:
+      - name: "br0"
+        members: ["peerlink", "bond1", "host_clag"]
+    peerlink:
+      - name: "peerlink"
+        members: ["swp3", "swp4"]
+        clag_ip: "169.254.254.1"
+    bond1:
+      - name: "bond1"
+        members: ["swp1", "swp2"]
+        clag_id: "1"
+    host_clag:
+      - name: "host_clag"
+        members: ["swp5"]
+        clag_id: "5"
+  leaf2:
+    bridges:
+      - name: "br0"
+        members: ["peerlink", "bond1", "host_clag"]
+    peerlink:
+      - name: "peerlink"
+        members: ["swp3", "swp4"]
+        clag_ip: "169.254.254.2"
+    bond1:
+      - name: "bond1"
+        members: ["swp1", "swp2"]
+        clag_id: "1"
+    host_clag:
+      - name: "host_clag"
+        members: ["swp5"]
+        clag_id: "5"
+  leaf3:
+    bridges:
+      - name: "br0"
+        members: ["peerlink", "bond1", "host_clag"]
+    peerlink:
+      - name: "peerlink"
+        members: ["swp3", "swp4"]
+        clag_ip: "169.254.254.1"
+    bond1:
+      - name: "bond1"
+        members: ["swp1", "swp2"]
+        clag_id: "1"
+    host_clag:
+      - name: "host_clag"
+        members: ["swp5"]
+        clag_id: "5"
+  leaf4:
+    bridges:
+      - name: "br0"
+        members: ["peerlink", "bond1", "host_clag"]
+    peerlink:
+      - name: "peerlink"
+        members: ["swp3", "swp4"]
+        clag_ip: "169.254.254.2"
+    bond1:
+      - name: "bond1"
+        members: ["swp1", "swp2"]
+        clag_id: "1"
+    host_clag:
+      - name: "host_clag"
+        members: ["swp5"]
+        clag_id: "5"
+  leaf5:
+    bridges:
+      - name: "br0"
+        members: ["peerlink", "bond1", "host_clag"]
+    peerlink:
+      - name: "peerlink"
+        members: ["swp3", "swp4"]
+        clag_ip: "169.254.254.1"
+    bond1:
+      - name: "bond1"
+        members: ["swp1", "swp2"]
+        clag_id: "1"
+    host_clag:
+      - name: "host_clag"
+        members: ["swp5"]
+        clag_id: "5"
+  leaf6:
+    bridges:
+      - name: "br0"
+        members: ["peerlink", "bond1", "host_clag"]
+    peerlink:
+      - name: "peerlink"
+        members: ["swp3", "swp4"]
+        clag_ip: "169.254.254.2"
+    bond1:
+      - name: "bond1"
+        members: ["swp1", "swp2"]
+        clag_id: "1"
+    host_clag:
+      - name: "host_clag"
+        members: ["swp5"] 
+        clag_id: "5"
+
+
+addresses:
+  spine1:
+    clag_ip: "169.254.254.1/30"
+    clag_peer: "169.254.254.2"
+    clag_mac: "44:38:39:ff:00:01"
+    svi: "10.1.10.252/24"
+  spine2:
+    clag_ip: "169.254.254.2/30"
+    clag_peer: "169.254.254.1"
+    clag_mac: "44:38:39:ff:00:01"
+    svi: "10.1.10.253/24"
+  leaf1:
+    clag_ip: "169.254.254.1/30"
+    clag_peer: "169.254.254.2"
+    clag_mac: "44:38:39:ff:00:02"
+    svi: "10.1.10.1/24"
+  leaf2:
+    clag_ip: "169.254.254.2/30"
+    clag_peer: "169.254.254.1"
+    clag_mac: "44:38:39:ff:00:02"
+    svi: "10.1.10.2/24"
+  leaf3:
+    clag_ip: "169.254.254.1/30"
+    clag_peer: "169.254.254.2"
+    clag_mac: "44:38:39:ff:00:03"
+    svi: "10.1.10.3/24"
+  leaf4:
+    clag_ip: "169.254.254.2/30"
+    clag_peer: "169.254.254.1"
+    clag_mac: "44:38:39:ff:00:03"
+    svi: "10.1.10.4/24"
+  leaf5:
+    clag_ip: "169.254.254.1/30"
+    clag_peer: "169.254.254.2"
+    clag_mac: "44:38:39:ff:00:04"
+    svi: "10.1.10.5/24"
+  leaf6:
+    clag_ip: "169.254.254.2/30"
+    clag_peer: "169.254.254.1"
+    clag_mac: "44:38:39:ff:00:04"
+    svi: "10.1.10.6/24"
+  host12:
+    vl1: "10.1.1.12"
+    vl10: "10.1.10.12"
+    gw: "10.1.10.254"
+  host34:
+    vl1: "10.1.1.34"
+    vl10: "10.1.10.34"
+    gw: "10.1.10.254"
+  host56:
+    vl1: "10.1.1.56"
+    vl10: "10.1.10.56"
+    gw: "10.1.10.254"
+
+vrr:
+  spine1:
+    vip: "10.1.10.254"
+    vmac: "00:11:22:33:44:55"
+  spine2:
+    vip: "10.1.10.254"
+    vmac: "00:11:22:33:44:55"

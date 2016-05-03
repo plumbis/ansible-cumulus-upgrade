@@ -1,0 +1,21 @@
+---
+- hosts: leaf
+  user: vagrant
+  sudo: yes
+  roles:
+    - vxrd
+    - vxlan-vni
+  vars_files:
+    - group_vars/all/vxlan.yml
+  handlers:
+    - include : handlers/main.yml
+
+- hosts: spine
+  user: vagrant
+  sudo: yes
+  roles:
+    - vxsnd
+  vars_files:
+    - group_vars/all/vxlan.yml
+  handlers:
+    - include : handlers/main.yml

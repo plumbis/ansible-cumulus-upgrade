@@ -1,0 +1,74 @@
+- include: spine_setup.yml
+
+- set_fact:
+    bridges: "{{ interfaces[ansible_hostname].bridges }}"
+  when: interfaces[ansible_hostname].bridges is defined
+
+- set_fact:
+    peerlink: "{{ interfaces[ansible_hostname].peerlink }}"
+  when: interfaces[ansible_hostname].peerlink is defined
+
+- set_fact:
+    peerlink: "{{ interfaces[ansible_hostname].peerlink }}"
+  when: interfaces[ansible_hostname].peerlink is defined
+
+- set_fact:
+    bond1: "{{ interfaces[ansible_hostname].bond1 }}"
+  when: interfaces[ansible_hostname].bond1 is defined
+
+- set_fact:
+    bond2: "{{ interfaces[ansible_hostname].bond2 }}"
+  when: interfaces[ansible_hostname].bond2 is defined
+
+- set_fact:
+    bond3: "{{ interfaces[ansible_hostname].bond3 }}"
+  when: interfaces[ansible_hostname].bond3 is defined
+
+- set_fact:
+    svi: "{{ addresses[ansible_hostname].svi }}"
+  when: addresses[ansible_hostname].svi is defined
+
+- name: configure bond1
+  cl_bond:
+    name: "{{ item.name }}"
+    slaves: "{{ item.members }}"
+    clag_id: "{{ item.clag_id }}"
+  with_items: bond1
+  when: bond1 is defined
+
+- name: configure bond2
+  cl_bond:
+    name: "{{ item.name }}"
+    slaves: "{{ item.members }}"
+    clag_id: "{{ item.clag_id }}"
+  with_items: bond2
+  when: bond2 is defined
+
+- name: configure bond3
+  cl_bond:
+    name: "{{ item.name }}"
+    slaves: "{{ item.members }}"
+    clag_id: "{{ item.clag_id }}"
+  with_items: bond3
+  when: bond3 is defined
+
+- name: configure vlan 10 vrr
+  cl_interface:
+    name: "br0.10"
+    virtual_ip: "{{ vrr[ansible_hostname].vip }}"
+    virtual_mac: "{{ vrr[ansible_hostname].vmac }}"
+    ipv4: "{{ item }}"
+  with_items: svi
+  when: vrr[ansible_hostname] is defined
+
+- name: Add source /etc/network/interfaces.d/*
+  lineinfile: dest=/etc/network/interfaces state=present line='source /etc/network/interfaces.d/*' insertbefore=BOF
+  sudo: yes
+
+- name: Restart networking
+  service: name=networking state=restarted
+  sudo: yes
+
+- name: Restart clagd
+  service: name=clagd state=restarted
+  sudo: yes

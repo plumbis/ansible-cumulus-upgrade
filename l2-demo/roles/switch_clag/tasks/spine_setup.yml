@@ -1,0 +1,58 @@
+- set_fact:
+    bridges: "{{ interfaces[ansible_hostname].bridges }}"
+  when: interfaces[ansible_hostname].bridges is defined
+
+- set_fact:
+    peerlink: "{{ interfaces[ansible_hostname].peerlink }}"
+  when: interfaces[ansible_hostname].peerlink is defined
+
+- set_fact:
+    host_clag: "{{ interfaces[ansible_hostname].host_clag }}"
+  when: interfaces[ansible_hostname].host_clag is defined
+
+- set_fact:
+    svi: "{{ addresses[ansible_hostname].svi }}"
+  when: addresses[ansible_hostname].svi is defined
+
+- name: configure loopback interface
+  cl_interface:
+    name: 'lo'
+    addr_method: 'loopback'
+    ipv4: '{{ loopback_ip }}/32'
+  when: loopback_ip is defined
+
+- name: configure bridges
+  cl_bridge:
+    name: "{{ item.name }}"
+    vlan_aware: yes
+    ports: "{{ item.members }}"
+    stp: true
+    vids: "1-100"
+    pvid: "1"
+  with_items: bridges
+  when: bridges is defined
+
+- name: configure peerlink
+  cl_bond:
+    name: "{{ item.name }}"
+    slaves: "{{ item.members }}"
+  with_items: peerlink
+  when: peerlink is defined
+
+- name: configure clag keepalive
+  cl_interface:
+    name: "peerlink.4094"
+    ipv4: "{{ addresses[ansible_hostname].clag_ip }}"
+    clagd_enable: yes
+    clagd_priority: "1000"
+    clagd_sys_mac: "{{ addresses[ansible_hostname].clag_mac }}"
+    clagd_peer_ip: "{{ addresses[ansible_hostname].clag_peer }}"
+    clagd_args: " --vm"
+
+- name: Add source /etc/network/interfaces.d/*
+  lineinfile: dest=/etc/network/interfaces state=present line='source /etc/network/interfaces.d/*' insertbefore=BOF
+  sudo: yes
+
+- name: Restart networking
+  service: name=networking state=restarted
+  sudo: yes
