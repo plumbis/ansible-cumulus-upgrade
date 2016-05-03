@@ -15,13 +15,15 @@ groups = {
 
 Vagrant.configure("2") do |config|
 
-  cumulus_image = "cumulus-vx-2.5.5"
+  cumulus_image = "CumulusCommunity/cumulus-vx"
   link_seed = Random.rand(999.999).to_s
 
   config.vm.define "leaf1" do |leaf1| 
     leaf1.vm.box = cumulus_image
     leaf1.vm.network "private_network",  virtualbox__intnet: 'leaf1-spine1-' + link_seed, auto_config: false
     leaf1.vm.network "private_network",  virtualbox__intnet: 'leaf1-spine2-' + link_seed, auto_config: false
+    leaf1.vm.network "private_network",  virtualbox__intnet: 'leaf1-leaf2-peerlink1-' + link_seed, auto_config: false
+    leaf1.vm.network "private_network",  virtualbox__intnet: 'leaf1-leaf2-peerlink2-' + link_seed, auto_config: false
     leaf1.vm.network "private_network",  virtualbox__intnet: 'leaf1-server1-' + link_seed, auto_config: false
     leaf1.vm.host_name = "leaf1"
     
@@ -35,6 +37,8 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--nicpromisc2", "allow-vms"]
       v.customize ["modifyvm", :id, "--nicpromisc3", "allow-vms"]
       v.customize ["modifyvm", :id, "--nicpromisc4", "allow-vms"]
+      v.customize ["modifyvm", :id, "--nicpromisc5", "allow-vms"]
+      v.customize ["modifyvm", :id, "--nicpromisc6", "allow-vms"]
     end
   end
   
@@ -42,6 +46,8 @@ Vagrant.configure("2") do |config|
     leaf2.vm.box = cumulus_image 
     leaf2.vm.network "private_network",  virtualbox__intnet: 'leaf2-spine1-' + link_seed, auto_config: false
     leaf2.vm.network "private_network",  virtualbox__intnet: 'leaf2-spine2-' + link_seed, auto_config: false
+    leaf2.vm.network "private_network",  virtualbox__intnet: 'leaf1-leaf2-peerlink1-' + link_seed, auto_config: false
+    leaf2.vm.network "private_network",  virtualbox__intnet: 'leaf1-leaf2-peerlink2-' + link_seed, auto_config: false
     leaf2.vm.network "private_network",  virtualbox__intnet: 'leaf2-server1-' + link_seed, auto_config: false
     leaf2.vm.host_name = "leaf2"
     
@@ -54,6 +60,8 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--nicpromisc2", "allow-vms"]
       v.customize ["modifyvm", :id, "--nicpromisc3", "allow-vms"]
       v.customize ["modifyvm", :id, "--nicpromisc4", "allow-vms"]
+      v.customize ["modifyvm", :id, "--nicpromisc5", "allow-vms"]
+      v.customize ["modifyvm", :id, "--nicpromisc6", "allow-vms"]
     end
   end
 
@@ -61,6 +69,8 @@ Vagrant.configure("2") do |config|
     leaf3.vm.box = cumulus_image
     leaf3.vm.network "private_network",  virtualbox__intnet: 'leaf3-spine1-' + link_seed, auto_config: false
     leaf3.vm.network "private_network",  virtualbox__intnet: 'leaf3-spine2-' + link_seed, auto_config: false
+    leaf3.vm.network "private_network",  virtualbox__intnet: 'leaf3-leaf4-peerlink1-' + link_seed, auto_config: false
+    leaf3.vm.network "private_network",  virtualbox__intnet: 'leaf3-leaf4-peerlink2-' + link_seed, auto_config: false
     leaf3.vm.network "private_network",  virtualbox__intnet: 'leaf3-server2-' + link_seed, auto_config: false
     leaf3.vm.host_name = "leaf3"
     
@@ -73,6 +83,8 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--nicpromisc2", "allow-vms"]
       v.customize ["modifyvm", :id, "--nicpromisc3", "allow-vms"]
       v.customize ["modifyvm", :id, "--nicpromisc4", "allow-vms"]
+      v.customize ["modifyvm", :id, "--nicpromisc5", "allow-vms"]
+      v.customize ["modifyvm", :id, "--nicpromisc6", "allow-vms"]
     end
   end
 
@@ -80,6 +92,8 @@ Vagrant.configure("2") do |config|
     leaf4.vm.box = cumulus_image
     leaf4.vm.network "private_network",  virtualbox__intnet: 'leaf4-spine1-' + link_seed, auto_config: false
     leaf4.vm.network "private_network",  virtualbox__intnet: 'leaf4-spine2-' + link_seed, auto_config: false
+    leaf4.vm.network "private_network",  virtualbox__intnet: 'leaf3-leaf4-peerlink1-' + link_seed, auto_config: false
+    leaf4.vm.network "private_network",  virtualbox__intnet: 'leaf3-leaf4-peerlink2-' + link_seed, auto_config: false
     leaf4.vm.network "private_network",  virtualbox__intnet: 'leaf4-server2-' + link_seed, auto_config: false
     leaf4.vm.host_name = "leaf4"
     
@@ -92,6 +106,8 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--nicpromisc2", "allow-vms"]
       v.customize ["modifyvm", :id, "--nicpromisc3", "allow-vms"]
       v.customize ["modifyvm", :id, "--nicpromisc4", "allow-vms"]
+      v.customize ["modifyvm", :id, "--nicpromisc5", "allow-vms"]
+      v.customize ["modifyvm", :id, "--nicpromisc6", "allow-vms"]
     end
   end
   
@@ -99,6 +115,8 @@ Vagrant.configure("2") do |config|
     leaf5.vm.box = cumulus_image
     leaf5.vm.network "private_network",  virtualbox__intnet: 'leaf5-spine1-' + link_seed, auto_config: false
     leaf5.vm.network "private_network",  virtualbox__intnet: 'leaf5-spine2-' + link_seed, auto_config: false
+    leaf5.vm.network "private_network",  virtualbox__intnet: 'leaf5-leaf6-peerlink1-' + link_seed, auto_config: false
+    leaf5.vm.network "private_network",  virtualbox__intnet: 'leaf5-leaf6-peerlink2-' + link_seed, auto_config: false
     leaf5.vm.network "private_network",  virtualbox__intnet: 'leaf5-server3-' + link_seed, auto_config: false
     leaf5.vm.host_name = "leaf5"
     
@@ -111,6 +129,8 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--nicpromisc2", "allow-vms"]
       v.customize ["modifyvm", :id, "--nicpromisc3", "allow-vms"]
       v.customize ["modifyvm", :id, "--nicpromisc4", "allow-vms"]
+      v.customize ["modifyvm", :id, "--nicpromisc5", "allow-vms"]
+      v.customize ["modifyvm", :id, "--nicpromisc6", "allow-vms"]
     end
   end
 
@@ -118,6 +138,8 @@ Vagrant.configure("2") do |config|
     leaf6.vm.box = cumulus_image
     leaf6.vm.network "private_network",  virtualbox__intnet: 'leaf6-spine1-' + link_seed, auto_config: false
     leaf6.vm.network "private_network",  virtualbox__intnet: 'leaf6-spine2-' + link_seed, auto_config: false
+    leaf6.vm.network "private_network",  virtualbox__intnet: 'leaf5-leaf6-peerlink1-' + link_seed, auto_config: false
+    leaf6.vm.network "private_network",  virtualbox__intnet: 'leaf5-leaf6-peerlink2-' + link_seed, auto_config: false
     leaf6.vm.network "private_network",  virtualbox__intnet: 'leaf6-server3-' + link_seed, auto_config: false
     leaf6.vm.host_name = "leaf6"
 
@@ -130,6 +152,11 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--nicpromisc2", "allow-vms"]
       v.customize ["modifyvm", :id, "--nicpromisc3", "allow-vms"]
       v.customize ["modifyvm", :id, "--nicpromisc4", "allow-vms"]
+      v.customize ["modifyvm", :id, "--nicpromisc5", "allow-vms"]
+      v.customize ["modifyvm", :id, "--nicpromisc6", "allow-vms"]
+      v.customize ["modifyvm", :id, "--nicpromisc7", "allow-vms"]
+      v.customize ["modifyvm", :id, "--nicpromisc8", "allow-vms"]
+      v.customize ["modifyvm", :id, "--nicpromisc9", "allow-vms"]
     end
   end
 
@@ -141,6 +168,8 @@ Vagrant.configure("2") do |config|
     spine1.vm.network "private_network",  virtualbox__intnet: 'leaf4-spine1-' + link_seed, auto_config: false
     spine1.vm.network "private_network",  virtualbox__intnet: 'leaf5-spine1-' + link_seed, auto_config: false
     spine1.vm.network "private_network",  virtualbox__intnet: 'leaf6-spine1-' + link_seed, auto_config: false
+    spine1.vm.network "private_network",  virtualbox__intnet: 'spine1-spine2-peerlink1-' + link_seed, auto_config: false
+    spine1.vm.network "private_network",  virtualbox__intnet: 'spine1-spine2-peerlink2-' + link_seed, auto_config: false
     spine1.vm.host_name = "spine1"
     
     spine1.vm.provision "ansible" do |ansible|
@@ -155,6 +184,8 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--nicpromisc5", "allow-vms"]
       v.customize ["modifyvm", :id, "--nicpromisc6", "allow-vms"]
       v.customize ["modifyvm", :id, "--nicpromisc7", "allow-vms"]
+      v.customize ["modifyvm", :id, "--nicpromisc8", "allow-vms"]
+      v.customize ["modifyvm", :id, "--nicpromisc9", "allow-vms"]
     end
   end
 
@@ -166,6 +197,8 @@ Vagrant.configure("2") do |config|
     spine2.vm.network "private_network",  virtualbox__intnet: 'leaf4-spine2-' + link_seed, auto_config: false
     spine2.vm.network "private_network",  virtualbox__intnet: 'leaf5-spine2-' + link_seed, auto_config: false
     spine2.vm.network "private_network",  virtualbox__intnet: 'leaf6-spine2-' + link_seed, auto_config: false
+    spine2.vm.network "private_network",  virtualbox__intnet: 'spine1-spine2-peerlink1-' + link_seed, auto_config: false
+    spine2.vm.network "private_network",  virtualbox__intnet: 'spine1-spine2-peerlink2-' + link_seed, auto_config: false
     spine2.vm.host_name = "spine2"
     
     spine2.vm.provision "ansible" do |ansible|
@@ -180,6 +213,8 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--nicpromisc5", "allow-vms"]
       v.customize ["modifyvm", :id, "--nicpromisc6", "allow-vms"]
       v.customize ["modifyvm", :id, "--nicpromisc7", "allow-vms"]
+      v.customize ["modifyvm", :id, "--nicpromisc8", "allow-vms"]
+      v.customize ["modifyvm", :id, "--nicpromisc9", "allow-vms"]
     end
 
   end
