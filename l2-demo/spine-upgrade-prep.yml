@@ -1,0 +1,14 @@
+---
+- hosts: spines
+  sudo: true
+  tasks:
+    - name: Backing up configurations
+    
+    - include: roles/leafs/tasks/upgrade.yml
+    - name: Fetch the latest update meta-data from the repository
+      apt: update_cache=yes
+    - name: Upgrade all the packages to the latest distribution
+      apt: upgrade=dist
+    - include: handlers/configs_backup.yml
+  handlers:
+    - include: handlers/main.yml
