@@ -5,7 +5,7 @@ This demo will show how to use Ansible, Behave and Cumulus Linux to execute full
 
 ## Network Diagram:
 The topology for this demo can be seen here.
-![Diagram](diagram.png)
+![Diagram](l2topology.png)
 [//]: # " Diagram located at: https://docs.google.com/drawings/d/1f7YIGF2dTdaFvvdVucxaEv-kGkqJrdd_Z-Xt38xARDk/edit"
 
 ## Connectivity
