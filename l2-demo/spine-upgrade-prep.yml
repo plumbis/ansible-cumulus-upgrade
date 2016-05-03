@@ -2,8 +2,8 @@
 - hosts: spines
   sudo: true
   tasks:
-    - name: Backing up configurations
-      include: roles/config_manager/configs_backup.yml
+#    - name: Backing up configurations
+    - include: roles/config_manager/configs_backup.yml
     - name: Fetch the latest update meta-data from the repository
       apt: update_cache=yes
     - name: Upgrade all the packages to the latest distribution
