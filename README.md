@@ -1,7 +1,9 @@
 # Cumulus Linux Rolling Upgrade Demo
 
 ## Introduction
-This demo will show how to use Ansible, Behave and Cumulus Linux to execute fully automated rolling upgrades of both a layer 3 and layer 2 (mLAG) network. To start the demo, navigate to either the layer 2 or layer 3 folder and "vagrant up". Caution: Attempting to "vagrant up" from the main project folder will result in an initialization error. 
+This demo will show how to use Ansible, Behave and Cumulus Linux to execute fully automated rolling upgrades of both a layer 3 and layer 2 (mLAG) network. 
+
+To start the demo, navigate to either the layer 2 or layer 3 folder and "vagrant up". Caution: Attempting to "vagrant up" from the main project folder will result in an initialization error. 
 
 ## Tools
 ### Ansible
