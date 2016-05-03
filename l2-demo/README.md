@@ -3,6 +3,8 @@
 ## Introduction
 This demo will show how to use Ansible, Behave and Cumulus Linux to execute fully automated rolling upgrades of a layer 2 MLAG network. Traffic will be drained and validated before a switch is upgraded. After the upgrade traffic will be brought back online, validated and the second device will be upgraded. 
 
+The Vagrantfile used to build the demo network utilizes the latest Cumulus VX image available. If there is a specific VX image you'd like to use, please edit this parameter in the Vagrantfile.
+
 ## Network Diagram:
 The topology for this demo can be seen here.
 ![Diagram](l2topology.png)
