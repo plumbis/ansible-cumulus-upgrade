@@ -1,5 +1,5 @@
 ---
-- hosts: leaf1
+- hosts: network:children
   become: yes
   tasks:
     - name: copy ports.conf
