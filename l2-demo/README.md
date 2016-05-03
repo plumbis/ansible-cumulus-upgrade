@@ -7,7 +7,7 @@ The Vagrantfile used to build the demo network utilizes the latest Cumulus VX im
 
 ## Network Diagram:
 The topology for this demo can be seen here.
-![Diagram](l2topology.png)
+![Diagram](L2 topology.png)
 [//]: # " Diagram located at: https://docs.google.com/drawings/d/1f7YIGF2dTdaFvvdVucxaEv-kGkqJrdd_Z-Xt38xARDk/edit"
 
 ## Connectivity
