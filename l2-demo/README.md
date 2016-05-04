@@ -5,6 +5,8 @@ This demo will show how to use Ansible, Behave and Cumulus Linux to execute full
 
 The Vagrantfile used to build the demo network utilizes the latest Cumulus VX image available. If there is a specific VX image you'd like to use, please edit this parameter in the Vagrantfile.
 
+Acronyms CLAG and MLAG may be used interchangably. 
+
 ## Network Diagram:
 The topology for this demo can be seen here.
 ![Diagram](L2Topology.png)
@@ -14,6 +16,23 @@ The topology for this demo can be seen here.
 Each host is using [Multi-Chassis Link Aggregation (MLAG)](https://docs.cumulusnetworks.com/display/DOCS/Multi-Chassis+Link+Aggregation+-+MLAG) to both leaf switches. All leaf switches are using MLAG to the spine layer. 
 
 Each device is using LACP and STP. MLAG peers will be using peerlinks and backup links as to avoid split brain issues. To drain the B side for the initial upgrade, the peerlinks will be disabled to switch traffic over to the A side exclusively.
+
+This topology demonstrates a deployment of Cumulus Link Aggregation (CLAG) and Cumulus Virtual Router Redundancy (VRR).
+
+http://docs.cumulusnetworks.com/display/DOCS/Multi-Chassis+Link+Aggregation+-+MLAG
+http://docs.cumulusnetworks.com/display/DOCS/Virtual+Router+Redundancy+-+VRR
+Details:
+
+CLAGs are formed as pictured above, with CLAG IP keepalive and messaging communication performed using interface peerlink.4094.
+
+On the Spine switches, CLAG IDs 1-3 are used towards the Leaf switches. Each Leaf pair use only CLAG ID 1 towards the Spines.
+A CLAG ID 5 is configured to the hosts. The hosts's bond interface is named "bond0".
+Each switch uses a VLAN-aware bridge, trunking VLANs 1-100 with a native VLAN of 1.
+SVIs are configured on VLAN 10 on all switches. The Spine switches also have VRR configured between them in VLAN 10 to provide gateway redundancy for the hosts.
+The hosts are configured with a VLAN 10 address and an address in the native VLAN (not pictured).
+Deployment:
+
+Run the Ansible playbook with the command ansible-playbook two-tier-clag.yml.
 
 ## The Upgrade Process
 Each server is connected to two leafs. The leftmost leaf will be considered to be in an "A" group. The rightmost leaf will be considered to be in a "B" group. The upgrade process will be on a datacenter wide basis, meaning all "A" switches will be run in parallel, and the same for all "B" switches.
