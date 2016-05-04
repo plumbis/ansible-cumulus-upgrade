@@ -17,10 +17,8 @@ Each server is using [Multi-Chassis Link Aggregation (MLAG)](https://docs.cumulu
 
 Each device is using LACP and STP. MLAG peers will be using peerlinks and backup links as to avoid split brain issues. To drain the B side for the initial upgrade, the peerlinks will be disabled to switch traffic over to the A side exclusively.
 
-This topology demonstrates a deployment of Cumulus Link Aggregation (CLAG) and Cumulus Virtual Router Redundancy (VRR).
+This topology demonstrates a deployment of [Cumulus Link Aggregation (CLAG)] (http://docs.cumulusnetworks.com/display/DOCS/Multi-Chassis+Link+Aggregation+-+MLAG) and [Cumulus Virtual Router Redundancy (VRR)](http://docs.cumulusnetworks.com/display/DOCS/Virtual+Router+Redundancy+-+VRR).
 
-http://docs.cumulusnetworks.com/display/DOCS/Multi-Chassis+Link+Aggregation+-+MLAG
-http://docs.cumulusnetworks.com/display/DOCS/Virtual+Router+Redundancy+-+VRR
 Details:
 
 CLAGs are formed as pictured above, with CLAG IP keepalive and messaging communication performed using interface peerlink.4094.
