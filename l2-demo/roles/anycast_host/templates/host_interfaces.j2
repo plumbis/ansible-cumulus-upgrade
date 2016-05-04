@@ -1,0 +1,40 @@
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet dhcp
+
+auto eth1
+iface eth1 inet manual
+bond-master bond0
+post-up ip link set up dev eth1
+
+auto eth2
+iface eth2 inet manual
+bond-master bond0
+post-up ip link set up dev eth2
+
+auto bond0
+iface bond0 inet static
+        address {{ addresses[ansible_hostname].vl1 }}
+        netmask 255.255.255.0
+        bond-mode 802.3ad
+        bond-miimon 100
+        bond-slaves eth1 eth2
+        post-up ip link set promisc on dev bond0
+
+auto bond0.10
+iface bond0.10 inet static
+        address {{ addresses[ansible_hostname].vl10 }}
+        netmask 255.255.255.0
+        vlan-raw-device bond0
+        post-up ip route add 10.0.0.0/8 via {{ addresses[ansible_hostname].gw }} 
+{% if applications.servers[ansible_hostname] is defined -%}
+
+iface bond0.10 inet static
+        address 70.70.1.1
+        netmask 255.255.255.255
+        vlan-raw-device bond0
+{% else -%}
+        post-up ip route add 70.70.1.0/24 via {{ addresses[ansible_hostname].gw }} 
+{% endif -%}

@@ -1,0 +1,9 @@
+---
+- name: push /etc/network/configuration for hosts
+  template: src=host_interfaces.j2 dest=/etc/network/interfaces
+
+- name: ifup all interfaces
+  command: "/sbin/ifup -a"
+
+- name: reboot
+  command: "/sbin/reboot"

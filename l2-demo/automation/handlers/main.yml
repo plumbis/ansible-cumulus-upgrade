@@ -1,5 +1,0 @@
-- name: reload networking
-  service: name=networking state=reloaded
-
-- name: restart quagga
-  service: name=quagga state=restarted

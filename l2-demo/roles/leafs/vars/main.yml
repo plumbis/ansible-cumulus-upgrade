@@ -1,118 +1,131 @@
----
+
 interfaces:
-
   leaf1:
-    lo:
-      ipv6: "fd::1:1/128"
-      ipv4: "172.16.0.1/32"
-
-    swp1:
-      alias: "To spine 1"
-
-    swp2:
-      alias: "To spine 2"
-
-    swp3:
-      alias: "To server 1"
-
+    bridges:
+      - name: "br0"
+        members: ["peerlink", "bond1”, "server_clag"]
+    peerlink:
+      - name: "peerlink"
+        members: ["swp3", "swp4"]
+        clag_ip: "169.254.254.1"
+    bond1:
+      - name: "bond1”
+        members: ["swp1", "swp2"]
+        clag_id: "12”
+    server_clag:
+      - name: "server_clag"
+        members: ["swp5"]
+        clag_id: “5”
   leaf2:
-    lo:
-      ipv6: "fd::1:2/128"
-      ipv4: "172.16.0.2/32"
-
-    swp1:
-      alias: "To spine 1"
-
-    swp2:
-      alias: "To spine 2"
-
-    swp3:
-      alias: "To server 1"
-
+    bridges:
+      - name: "br0"
+        members: ["peerlink", "bond1”, "server_clag"]
+    peerlink:
+      - name: "peerlink"
+        members: ["swp3", "swp4"]
+        clag_ip: "169.254.254.2"
+    bond1:
+      - name: "bond1”
+        members: ["swp1", "swp2"]
+        clag_id: "12”
+    server_clag:
+      - name: "server_clag"
+        members: ["swp5"]
+        clag_id: “5”
   leaf3:
-    lo:
-      ipv6: "fd::1:3/128"
-      ipv4: "172.16.0.3/32"
-
-    swp1:
-      alias: "To spine 1"
-
-    swp2:
-      alias: "To spine 2"
-
-    swp3:
-      alias: "To server 2"
-
+    bridges:
+      - name: "br0"
+        members: ["peerlink", "bond1”, "server_clag"]
+    peerlink:
+      - name: "peerlink"
+        members: ["swp3", "swp4"]
+        clag_ip: "169.254.254.1"
+    bond34:
+      - name: "bond1”
+        members: ["swp1", "swp2"]
+        clag_id: “34”
+    server_clag:
+      - name: "server_clag"
+        members: ["swp5"]
+        clag_id: “5”
   leaf4:
-    lo:
-      ipv6: "fd::1:4/128"
-      ipv4: "172.16.0.4/32"
-
-    swp1:
-      alias: "To spine 1"
-
-    swp2:
-      alias: "To spine 2"
-
-    swp3:
-      alias: "To server 2"
-
+    bridges:
+      - name: "br0"
+        members: ["peerlink", "bond1", "server_clag"]
+    peerlink:
+      - name: "peerlink"
+        members: ["swp3", "swp4"]
+        clag_ip: "169.254.254.2"
+    bond1:
+      - name: "bond1"
+        members: ["swp1", "swp2"]
+        clag_id: “34”
+    server_clag:
+      - name: "server_clag"
+        members: ["swp5"]
+        clag_id: “5”
   leaf5:
-    lo:
-      ipv6: "fd::1:5/128"
-      ipv4: "172.16.0.5/32"
-
-    swp1:
-      alias: "To spine 1"
-
-    swp2:
-      alias: "To spine 2"
-
-    swp3:
-      alias: "To server 3"
-
+    bridges:
+      - name: "br0"
+        members: ["peerlink", "bond1", "server_clag"]
+    peerlink:
+      - name: "peerlink"
+        members: ["swp3", "swp4"]
+        clag_ip: "169.254.254.1"
+    bond1:
+      - name: "bond1"
+        members: ["swp1", "swp2"]
+        clag_id: “56”
+    server_clag:
+      - name: "server_clag"
+        members: ["swp5"]
+        clag_id: "5"
   leaf6:
-    lo:
-      ipv6: "fd::1:6/128"
-      ipv4: "172.16.0.6/32"
+    bridges:
+      - name: "br0"
+        members: ["peerlink", "bond1", "server_clag"]
+    peerlink:
+      - name: "peerlink"
+        members: ["swp3", "swp4"]
+        clag_ip: "169.254.254.2"
+    bond1:
+      - name: "bond1"
+        members: ["swp1", "swp2"]
+        clag_id: “56”
+    server_clag:
+      - name: "server_clag"
+        members: ["swp5"] 
+        clag_id: “5”
 
-    swp1:
-      alias: "To spine 1"
 
-    swp2:
-      alias: "To spine 2"
-
-    swp3:
-      alias: "To server 3"
-
-bgp:
-
+addresses:
   leaf1:
-    asn: "64601"
-    fabric_ports: ["swp1", "swp2"]
-    server_ports: ["swp3"]
-
+    clag_ip: "169.254.254.1/30"
+    clag_peer: "169.254.254.2"
+    clag_mac: "44:38:39:ff:00:02"
+    svi: "10.1.10.1/24"
   leaf2:
-    asn: "64602"
-    fabric_ports: ["swp1", "swp2"]
-    server_ports: ["swp3"]
-
+    clag_ip: "169.254.254.2/30"
+    clag_peer: "169.254.254.1"
+    clag_mac: "44:38:39:ff:00:02"
+    svi: "10.1.10.2/24"
   leaf3:
-    asn: "64603"
-    fabric_ports: ["swp1", "swp2"]
-    server_ports: ["swp3"]
-
+    clag_ip: "169.254.254.1/30"
+    clag_peer: "169.254.254.2"
+    clag_mac: "44:38:39:ff:00:03"
+    svi: "10.1.10.3/24"
   leaf4:
-    asn: "64604"
-    fabric_ports: ["swp1", "swp2"]
-    server_ports: ["swp3"]
-
+    clag_ip: "169.254.254.2/30"
+    clag_peer: "169.254.254.1"
+    clag_mac: "44:38:39:ff:00:03"
+    svi: "10.1.10.4/24"
   leaf5:
-    asn: "64605"
-    fabric_ports: ["swp1", "swp2"]
-    server_ports: ["swp3"]
-
+    clag_ip: "169.254.254.1/30"
+    clag_peer: "169.254.254.2"
+    clag_mac: "44:38:39:ff:00:04"
+    svi: "10.1.10.5/24"
   leaf6:
-    asn: "64606"
-    fabric_ports: ["swp1", "swp2"]
-    server_ports: ["swp3"]
+    clag_ip: "169.254.254.2/30"
+    clag_peer: "169.254.254.1"
+    clag_mac: "44:38:39:ff:00:04"
+    svi: "10.1.10.6/24"
