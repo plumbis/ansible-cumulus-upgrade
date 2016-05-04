@@ -13,7 +13,7 @@ The topology for this demo can be seen here.
 [//]: # " Diagram located at: https://docs.google.com/drawings/d/1f7YIGF2dTdaFvvdVucxaEv-kGkqJrdd_Z-Xt38xARDk/edit"
 
 ## Connectivity
-Each host is using [Multi-Chassis Link Aggregation (MLAG)](https://docs.cumulusnetworks.com/display/DOCS/Multi-Chassis+Link+Aggregation+-+MLAG) to both leaf switches. All leaf switches are using MLAG to the spine layer. 
+Each server is using [Multi-Chassis Link Aggregation (MLAG)](https://docs.cumulusnetworks.com/display/DOCS/Multi-Chassis+Link+Aggregation+-+MLAG) to both leaf switches. All leaf switches are using MLAG to the spine layer. 
 
 Each device is using LACP and STP. MLAG peers will be using peerlinks and backup links as to avoid split brain issues. To drain the B side for the initial upgrade, the peerlinks will be disabled to switch traffic over to the A side exclusively.
 
@@ -25,11 +25,12 @@ Details:
 
 CLAGs are formed as pictured above, with CLAG IP keepalive and messaging communication performed using interface peerlink.4094.
 
-On the Spine switches, CLAG IDs 1-3 are used towards the Leaf switches. Each Leaf pair use only CLAG ID 1 towards the Spines.
-A CLAG ID 5 is configured to the hosts. The hosts's bond interface is named "bond0".
+CLAG IDs 11-61 are used between the Leaf and Spine switches. The CLAG ID's are numbered x1 with "x" corresponding to the leaf number.
+CLAG ID's 1-3 are configured to the servers and correspond to server numbering. The server's bond interface is named "bond0".
+
 Each switch uses a VLAN-aware bridge, trunking VLANs 1-100 with a native VLAN of 1.
-SVIs are configured on VLAN 10 on all switches. The Spine switches also have VRR configured between them in VLAN 10 to provide gateway redundancy for the hosts.
-The hosts are configured with a VLAN 10 address and an address in the native VLAN (not pictured).
+SVIs are configured on VLAN 10 on all switches. The Spine switches also have VRR configured between them in VLAN 10 to provide gateway redundancy for the servers.
+The servers are configured with a VLAN 10 address and an address in the native VLAN (not pictured).
 Deployment:
 
 Run the Ansible playbook with the command ansible-playbook two-tier-clag.yml.
