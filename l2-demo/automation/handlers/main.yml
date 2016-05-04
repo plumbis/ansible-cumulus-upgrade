@@ -3,10 +3,3 @@
 
 - name: restart quagga
   service: name=quagga state=restarted
-
-- name: restart vxsnd
-  shell: "service vxsnd restart"
-  
-- name: restart vxrd
-  shell: "service vxrd restart"
-  
