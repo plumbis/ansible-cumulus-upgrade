@@ -1,8 +1,9 @@
 ---
-- name: Copy /etc/network/interfaces
-  template: src=interfaces.j2 dest=/etc/network/interfaces
-  notify: reload networking
+- name: push /etc/network/configuration for servers
+  template: src=host_interfaces.j2 dest=/etc/network/interfaces
 
-- name: Copy Quagga Configuration
-  template: src=Quagga.conf.j2 dest=/etc/quagga/Quagga.conf
-  notify: reload quagga
+- name: ifup all interfaces
+  command: "/sbin/ifup -a"
+
+- name: reboot
+  command: "/sbin/reboot"
