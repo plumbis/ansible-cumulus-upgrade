@@ -1,4 +1,4 @@
-- include: spine_setup.yml
+#- include: spine_setup.yml
 
 - set_fact:
     bridges: "{{ interfaces[ansible_hostname].bridges }}"
