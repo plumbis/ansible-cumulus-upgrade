@@ -1,4 +1,4 @@
-
+#role = servers
 interfaces:
   spine1:
     bridges:

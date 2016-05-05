@@ -30,7 +30,7 @@ Vagrant.configure("2") do |config|
     
     leaf1.vm.provision "ansible" do |ansible|
       ansible.groups = groups
-      ansible.verbose = "vvv"
+      #ansible.verbose = "vvv"
       ansible.playbook = "provision.yml"
     end
 
@@ -228,6 +228,7 @@ Vagrant.configure("2") do |config|
     
     server1.vm.provision "ansible" do |ansible|
       ansible.groups = groups
+      #ansible.verbose = "vvvv"
       ansible.playbook = "provision.yml"
     end
 

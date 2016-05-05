@@ -43,7 +43,7 @@ interfaces:
   leaf1:
     bridges:
       - name: "br0"
-        members: ["peerlink", "bond1", "host_clag"]
+        members: ["peerlink", "bond1", "server_clag"]
     peerlink:
       - name: "peerlink"
         members: ["swp3", "swp4"]
@@ -52,14 +52,14 @@ interfaces:
       - name: "bond1"
         members: ["swp1", "swp2"]
         clag_id: "1"
-    host_clag:
-      - name: "host_clag"
+    server_clag:
+      - name: "server_clag"
         members: ["swp5"]
         clag_id: "5"
   leaf2:
     bridges:
       - name: "br0"
-        members: ["peerlink", "bond1", "host_clag"]
+        members: ["peerlink", "bond1", "server_clag"]
     peerlink:
       - name: "peerlink"
         members: ["swp3", "swp4"]
@@ -68,14 +68,14 @@ interfaces:
       - name: "bond1"
         members: ["swp1", "swp2"]
         clag_id: "1"
-    host_clag:
-      - name: "host_clag"
+    server_clag:
+      - name: "server_clag"
         members: ["swp5"]
         clag_id: "5"
   leaf3:
     bridges:
       - name: "br0"
-        members: ["peerlink", "bond1", "host_clag"]
+        members: ["peerlink", "bond1", "server_clag"]
     peerlink:
       - name: "peerlink"
         members: ["swp3", "swp4"]
@@ -84,14 +84,14 @@ interfaces:
       - name: "bond1"
         members: ["swp1", "swp2"]
         clag_id: "1"
-    host_clag:
-      - name: "host_clag"
+    server_clag:
+      - name: "server_clag"
         members: ["swp5"]
         clag_id: "5"
   leaf4:
     bridges:
       - name: "br0"
-        members: ["peerlink", "bond1", "host_clag"]
+        members: ["peerlink", "bond1", "server_clag"]
     peerlink:
       - name: "peerlink"
         members: ["swp3", "swp4"]
@@ -100,14 +100,14 @@ interfaces:
       - name: "bond1"
         members: ["swp1", "swp2"]
         clag_id: "1"
-    host_clag:
-      - name: "host_clag"
+    server_clag:
+      - name: "server_clag"
         members: ["swp5"]
         clag_id: "5"
   leaf5:
     bridges:
       - name: "br0"
-        members: ["peerlink", "bond1", "host_clag"]
+        members: ["peerlink", "bond1", "server_clag"]
     peerlink:
       - name: "peerlink"
         members: ["swp3", "swp4"]
@@ -116,14 +116,14 @@ interfaces:
       - name: "bond1"
         members: ["swp1", "swp2"]
         clag_id: "1"
-    host_clag:
-      - name: "host_clag"
+    server_clag:
+      - name: "server_clag"
         members: ["swp5"]
         clag_id: "5"
   leaf6:
     bridges:
       - name: "br0"
-        members: ["peerlink", "bond1", "host_clag"]
+        members: ["peerlink", "bond1", "server_clag"]
     peerlink:
       - name: "peerlink"
         members: ["swp3", "swp4"]
@@ -132,8 +132,8 @@ interfaces:
       - name: "bond1"
         members: ["swp1", "swp2"]
         clag_id: "1"
-    host_clag:
-      - name: "host_clag"
+    server_clag:
+      - name: "server_clag"
         members: ["swp5"] 
         clag_id: "5"
 
@@ -179,15 +179,15 @@ addresses:
     clag_peer: "169.254.254.1"
     clag_mac: "44:38:39:ff:00:04"
     svi: "10.1.10.6/24"
-  host12:
+  server1:
     vl1: "10.1.1.12"
     vl10: "10.1.10.12"
     gw: "10.1.10.254"
-  host34:
+  server1:
     vl1: "10.1.1.34"
     vl10: "10.1.10.34"
     gw: "10.1.10.254"
-  host56:
+  server56:
     vl1: "10.1.1.56"
     vl10: "10.1.10.56"
     gw: "10.1.10.254"
