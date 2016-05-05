@@ -23,8 +23,7 @@ Details:
 
 CLAGs are formed as pictured above, with CLAG IP keepalive and messaging communication performed using interface peerlink.4094.
 
-CLAG IDs 11-61 are used between the Leaf and Spine switches. The CLAG ID's are numbered x1 with "x" corresponding to the leaf number.
-CLAG ID's 1-3 are configured to the servers and correspond to server numbering. The server's bond interface is named "bond0".
+CLAG IDs 1-3 are used between the Leaf and Spine switches in order from left (leafs1/2) to right. CLAG ID 5 is configured to the servers to correspond to server port connection numbering. The server's bond interface is named "bond0".
 
 Each switch uses a VLAN-aware bridge, trunking VLANs 1-100 with a native VLAN of 1.
 SVIs are configured on VLAN 10 on all switches. The Spine switches also have VRR configured between them in VLAN 10 to provide gateway redundancy for the servers.
