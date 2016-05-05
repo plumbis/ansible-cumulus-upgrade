@@ -1,0 +1,24 @@
+---
+- name: Show Spanning Tree
+  command: "mstpctl showall”
+
+- name: Show Bridges
+  command: “brctl show”
+
+- name: Show Bridge MACs
+  command: “brctl showmacs br0”
+
+- name: Show Bridge STP
+  command: “brctl showstp br0”
+
+- name: Show MLAG
+  command: “clagctl”
+
+- name: Show links
+  command: “ip link show”
+
+- name: Show MLAG
+  command: “clagctl”
+
+- name: Show Interfaces
+  command: “ifquery”

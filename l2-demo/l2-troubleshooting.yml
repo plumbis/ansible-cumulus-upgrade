@@ -1,0 +1,21 @@
+---
+- hosts: spines
+  sudo: yes
+  roles:
+    - troubleshooting
+  handlers:
+    - include: handlers/main.yml
+
+- hosts: leafs
+  sudo: yes
+  roles:
+    - troubleshooting
+  handlers:
+    - include: handlers/main.yml
+
+- hosts: servers
+  sudo: yes
+  roles:
+    - troubleshooting
+  handlers:
+    - include: handlers/main.yml
