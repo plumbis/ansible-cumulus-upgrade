@@ -1,4 +1,17 @@
 ---
+- name: install ifenslave
+  apt: name=ifenslave state=present
+
+- name: install vlan
+  apt: name=vlan state=present
+
+- name: adding bonding and rtc modules to /etc/modules
+  lineinfile: dest=/etc/modules line="{{ item }}"
+  with_items: 
+     - "rtc"
+     - "bonding" 
+     - "8021q"
+
 - name: push /etc/network/configuration for servers
   template: src=host_interfaces.j2 dest=/etc/network/interfaces
 
