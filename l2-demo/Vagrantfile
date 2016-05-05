@@ -221,7 +221,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "server1" do |server1| 
-    server1.vm.box = server_image
+    server1.vm.box = cumulus_image
     server1.vm.network "private_network",  virtualbox__intnet: 'leaf1-server1-' + link_seed, auto_config: false
     server1.vm.network "private_network",  virtualbox__intnet: 'leaf2-server1-' + link_seed, auto_config: false
     server1.vm.host_name = "server1"
@@ -238,7 +238,7 @@ Vagrant.configure("2") do |config|
   end
   
   config.vm.define "server2" do |server2| 
-    server2.vm.box = server_image
+    server2.vm.box = cumulus_image
     server2.vm.network "private_network",  virtualbox__intnet: 'leaf3-server2-' + link_seed, auto_config: false
     server2.vm.network "private_network",  virtualbox__intnet: 'leaf4-server2-' + link_seed, auto_config: false
     server2.vm.host_name = "server2"
