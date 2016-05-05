@@ -21,6 +21,7 @@ iface bond0 inet static
         bond-mode 802.3ad
         bond-miimon 100
         bond-slaves eth1 eth2
+        bond-min-links 0
         post-up ip link set promisc on dev bond0
 
 auto bond0.10

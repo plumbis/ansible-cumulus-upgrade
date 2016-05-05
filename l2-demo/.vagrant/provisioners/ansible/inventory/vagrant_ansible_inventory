@@ -7,8 +7,6 @@ leaf4 ansible_ssh_host=127.0.0.1 ansible_ssh_port=2202 ansible_ssh_user='vagrant
 leaf5 ansible_ssh_host=127.0.0.1 ansible_ssh_port=2203 ansible_ssh_user='vagrant' ansible_ssh_private_key_file='/Users/kevinw/Box Sync/kevinw/1-CumulusDemos/ansible-cumulus-upgrade/l2-demo/.vagrant/machines/leaf5/virtualbox/private_key'
 leaf6 ansible_ssh_host=127.0.0.1 ansible_ssh_port=2204 ansible_ssh_user='vagrant' ansible_ssh_private_key_file='/Users/kevinw/Box Sync/kevinw/1-CumulusDemos/ansible-cumulus-upgrade/l2-demo/.vagrant/machines/leaf6/virtualbox/private_key'
 server1 ansible_ssh_host=127.0.0.1 ansible_ssh_port=2207 ansible_ssh_user='vagrant' ansible_ssh_private_key_file='/Users/kevinw/Box Sync/kevinw/1-CumulusDemos/ansible-cumulus-upgrade/l2-demo/.vagrant/machines/server1/virtualbox/private_key'
-server2 ansible_ssh_host=127.0.0.1 ansible_ssh_port=2208 ansible_ssh_user='vagrant' ansible_ssh_private_key_file='/Users/kevinw/Box Sync/kevinw/1-CumulusDemos/ansible-cumulus-upgrade/l2-demo/.vagrant/machines/server2/virtualbox/private_key'
-server3 ansible_ssh_host=127.0.0.1 ansible_ssh_port=2209 ansible_ssh_user='vagrant' ansible_ssh_private_key_file='/Users/kevinw/Box Sync/kevinw/1-CumulusDemos/ansible-cumulus-upgrade/l2-demo/.vagrant/machines/server3/virtualbox/private_key'
 spine1 ansible_ssh_host=127.0.0.1 ansible_ssh_port=2205 ansible_ssh_user='vagrant' ansible_ssh_private_key_file='/Users/kevinw/Box Sync/kevinw/1-CumulusDemos/ansible-cumulus-upgrade/l2-demo/.vagrant/machines/spine1/virtualbox/private_key'
 spine2 ansible_ssh_host=127.0.0.1 ansible_ssh_port=2206 ansible_ssh_user='vagrant' ansible_ssh_private_key_file='/Users/kevinw/Box Sync/kevinw/1-CumulusDemos/ansible-cumulus-upgrade/l2-demo/.vagrant/machines/spine2/virtualbox/private_key'
 
@@ -26,8 +24,6 @@ leaf6
 
 [servers]
 server1
-server2
-server3
 
 [a-leafs]
 leaf1
