@@ -1,3 +1,4 @@
+#l2-demo/roles/leafs/tasks/main.yml
 - set_fact:
     bridges: "{{ interfaces[ansible_hostname].bridges }}"
   when: interfaces[ansible_hostname].bridges is defined
@@ -7,12 +8,28 @@
   when: interfaces[ansible_hostname].peerlink is defined
 
 - set_fact:
-    host_clag: "{{ interfaces[ansible_hostname].host_clag }}"
-  when: interfaces[ansible_hostname].host_clag is defined
+    server_clag: "{{ interfaces[ansible_hostname].server_clag }}"
+  when: interfaces[ansible_hostname].server_clag is defined
 
 - set_fact:
     svi: "{{ addresses[ansible_hostname].svi }}"
   when: addresses[ansible_hostname].svi is defined
+  
+- set_fact:
+    bond1: "{{ interfaces[ansible_hostname].bond1 }}"
+  when: interfaces[ansible_hostname].bond1 is defined
+
+- set_fact:
+    bond2: "{{ interfaces[ansible_hostname].bond2 }}"
+  when: interfaces[ansible_hostname].bond2 is defined
+
+- set_fact:
+    bond3: "{{ interfaces[ansible_hostname].bond3 }}"
+  when: interfaces[ansible_hostname].bond3 is defined
+  
+- set_fact:
+    clag_backup_ip: "{{ addresses[ansible_hostname].clag_backup_ip }}"
+  when: addresses[ansible_hostname].clag_backup_ip is defined   
 
 - name: configure bridges
   cl_bridge:
@@ -32,13 +49,21 @@
   with_items: peerlink
   when: peerlink is defined
 
-- name: configure host_clag
+- name: configure server_clag
   cl_bond:
     name: "{{ item.name }}"
     slaves: "{{ item.members }}"
     clag_id: "{{ item.clag_id }}"
-  with_items: host_clag
-  when: host_clag is defined
+  with_items: server_clag
+  when: server_clag is defined
+
+- name: configure bond1
+  cl_bond:
+    name: "{{ item.name }}"
+    slaves: "{{ item.members }}"
+    clag_id: "{{ item.clag_id }}"
+  with_items: bond1
+  when: bond1 is defined
 
 - name: configure vlan 10 svi
   cl_interface:
@@ -56,6 +81,10 @@
     clagd_peer_ip: "{{ addresses[ansible_hostname].clag_peer }}"
     clagd_args: " --vm"
 
+- name: configure clag backup IP
+  lineinfile: dest=/etc/network/interfaces.d/peerlink.4094 regexp='' insertafter=EOF line="        clag-backup-ip {{ addresses[ansible_hostname].clag_backup_ip }}"
+  with_items: clag_backup_ip
+  when: clag_backup_ip is defined
 
 - name: Add source /etc/network/interfaces.d/*
   lineinfile: dest=/etc/network/interfaces state=present line='source /etc/network/interfaces.d/*' insertbefore=BOF

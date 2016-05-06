@@ -8,7 +8,3 @@
   tasks:
     - name: Show MLAG
       shell: "clagctl"
-      register: mlag_status
-      
-#    - name: print output for MLAG status
-#      debug: msg="{{mlag_status}}"
