@@ -1,21 +1,25 @@
 ---
-- hosts: spines
-  sudo: yes
-  roles:
-    - troubleshooting
-  handlers:
-    - include: handlers/main.yml
+# to run this playbook, use the following command:
+# "ansible-playbook l2-troubleshooting.yml --verbose"
+# the text output will be run together, but it'll give you working output to do base troubleshooting. 
+- hosts: network
+  tasks:
+    - name: Show MLAG
+      command: sudo clagctl
+ 
+    - name: Show Bridges
+      command: sudo brctl show
 
-- hosts: leafs
-  sudo: yes
-  roles:
-    - troubleshooting
-  handlers:
-    - include: handlers/main.yml
+    - name: Show Bridge MACs
+      command: sudo brctl showmacs br0
 
-- hosts: servers
-  sudo: yes
-  roles:
-    - troubleshooting
-  handlers:
-    - include: handlers/main.yml
+    - name: Show Bridge STP
+      command: sudo brctl showstp br0
+
+
+    - name: Show links
+      command: sudo ip link show
+
+
+    - name: Show Interfaces
+      command: sudo ifquery -a
