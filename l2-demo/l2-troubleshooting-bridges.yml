@@ -1,0 +1,14 @@
+---
+# to run this playbook, use the following command:
+# "ansible-playbook l2-troubleshooting-bridges.yml --verbose"
+# the text output will be run together, but it'll give you working output to do base troubleshooting. 
+- hosts: network
+  tasks:
+    - name: Show Bridges
+      command: sudo brctl show
+
+    - name: Show Bridge MACs
+      command: sudo brctl showmacs br0
+
+    - name: Show Bridge STP
+      command: sudo brctl showstp br0

@@ -1,0 +1,14 @@
+---
+# to run this playbook, use the following command:
+# "ansible-playbook l2-troubleshooting-clag.yml --verbose"
+# 
+# to run commands individually, use the following:
+# ansible network -a "clagctl"
+- hosts: network
+  tasks:
+    - name: Show MLAG
+      shell: "clagctl"
+      register: mlag_status
+      
+#    - name: print output for MLAG status
+#      debug: msg="{{mlag_status}}"

@@ -1,7 +1,9 @@
 ---
 # to run this playbook, use the following command:
-# "ansible-playbook l2-troubleshooting.yml --verbose"
-# the text output will be run together, but it'll give you working output to do base troubleshooting. 
+# "ansible-playbook l2-troubleshooting-all.yml --verbose"
+# 
+# to run commands individually, use the following:
+# ansible network -a "clagctl"
 - hosts: network
   tasks:
     - name: Show MLAG
@@ -16,10 +18,8 @@
     - name: Show Bridge STP
       command: sudo brctl showstp br0
 
-
     - name: Show links
       command: sudo ip link show
-
 
     - name: Show Interfaces
       command: sudo ifquery -a

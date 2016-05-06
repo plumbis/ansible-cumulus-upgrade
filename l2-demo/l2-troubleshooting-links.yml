@@ -1,0 +1,12 @@
+---
+# to run this playbook, use the following command:
+# "ansible-playbook l2-troubleshooting-links.yml --verbose"
+# the text output will be run together, but it'll give you working output to do base troubleshooting. 
+- hosts: network
+  tasks:
+    - name: Show links
+      command: sudo ip link show
+
+
+    - name: Show Interfaces
+      command: sudo ifquery -a
