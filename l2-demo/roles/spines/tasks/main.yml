@@ -70,10 +70,11 @@
     clagd_peer_ip: "{{ addresses[ansible_hostname].clag_peer }}"
     clagd_args: " --vm"
 
-- name: configure clag_backup_link
-  cl_bond:
-    name: "{{ item.name }}"
-    slaves: "{{ item.members }}"
+- name: configure clag_backup_link_spine
+  cl_interface:
+    name: '{{ clag_backup_link }}'
+    alias_name: 'clag_backup_link'
+    ipv4: '{{ clag_backup_ip }}/30'
   with_items: clag_backup_link
   when: clag_backup_link is defined
 
