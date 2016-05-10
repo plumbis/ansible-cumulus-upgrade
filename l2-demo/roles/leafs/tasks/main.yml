@@ -29,7 +29,11 @@
   
 - set_fact:
     clag_backup_ip: "{{ addresses[ansible_hostname].clag_backup_ip }}"
-  when: addresses[ansible_hostname].clag_backup_ip is defined   
+  when: addresses[ansible_hostname].clag_backup_ip is defined 
+
+- set_fact:
+    clag_peer_backup_ip: "{{ addresses[ansible_hostname].clag_peer_backup_ip }}"
+  when: addresses[ansible_hostname].clag_peer_backup_ip is defined 
 
 - name: configure bridges
   cl_bridge:
@@ -81,10 +85,16 @@
     clagd_peer_ip: "{{ addresses[ansible_hostname].clag_peer }}"
     clagd_args: " --vm"
 
+- name: configure clag_backup_link_leaf
+  cl_interface: 
+    name: "swp6" 
+    ipv4: "{{ addresses[ansible_hostname].clag_backup_ip }}/30" 
+    alias_name: "clag_backup_link"
+
 - name: configure clag backup IP
-  lineinfile: dest=/etc/network/interfaces.d/peerlink.4094 regexp='' insertafter=EOF line="        clag-backup-ip {{ addresses[ansible_hostname].clag_backup_ip }}"
-  with_items: clag_backup_ip
-  when: clag_backup_ip is defined
+  lineinfile: dest=/etc/network/interfaces.d/peerlink.4094 regexp='' insertafter=EOF line="        clagd-backup-ip {{ addresses[ansible_hostname].clag_peer_backup_ip }}"
+  with_items: clag_peer_backup_ip
+  when: clag_peer_backup_ip is defined
 
 - name: Add source /etc/network/interfaces.d/*
   lineinfile: dest=/etc/network/interfaces state=present line='source /etc/network/interfaces.d/*' insertbefore=BOF
