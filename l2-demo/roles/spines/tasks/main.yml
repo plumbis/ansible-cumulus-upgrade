@@ -24,12 +24,12 @@
   when: interfaces[ansible_hostname].host_clag is defined
 
 - set_fact:
-    clag_backup_link: "{{ interfaces[ansible_hostname].clag_backup_link }}"
-  when: interfaces[ansible_hostname].clag_backup_link is defined
-
-- set_fact:
     clag_backup_ip: "{{ addresses[ansible_hostname].clag_backup_ip }}"
   when: addresses[ansible_hostname].clag_backup_ip is defined 
+
+- set_fact:
+    clag_peer_backup_ip: "{{ addresses[ansible_hostname].clag_peer_backup_ip }}"
+  when: addresses[ansible_hostname].clag_peer_backup_ip is defined 
 
 - set_fact:
     svi: "{{ addresses[ansible_hostname].svi }}"
@@ -70,14 +70,6 @@
     clagd_peer_ip: "{{ addresses[ansible_hostname].clag_peer }}"
     clagd_args: " --vm"
 
-- name: configure clag_backup_link_spine
-  cl_interface:
-    name: '{{ clag_backup_link }}'
-    alias_name: 'clag_backup_link'
-    ipv4: '{{ clag_backup_ip }}/30'
-  with_items: clag_backup_link
-  when: clag_backup_link is defined
-
 - name: configure bond1
   cl_bond:
     name: "{{ item.name }}"
@@ -110,11 +102,17 @@
     ipv4: "{{ item }}"
   with_items: svi
   when: vrr[ansible_hostname] is defined
+  
+- name: configure clag_backup_link_spine
+  cl_interface: 
+    name: "swp9" 
+    ipv4: "{{ addresses[ansible_hostname].clag_backup_ip }}/30" 
+    alias_name: "clag_backup_link"
 
 - name: configure clag backup IP
-  lineinfile: dest=/etc/network/interfaces.d/peerlink.4094 regexp='' insertafter=EOF line="clag-backup-ip {{ addresses[ansible_hostname].clag_backup_ip }}"
-  with_items: clag_backup_ip
-  when: clag_backup_ip is defined
+  lineinfile: dest=/etc/network/interfaces.d/peerlink.4094 regexp='' insertafter=EOF line="        clagd-backup-ip {{ addresses[ansible_hostname].clag_peer_backup_ip }}"
+  with_items: clag_peer_backup_ip
+  when: clag_peer_backup_ip is defined
 
 - name: Add source /etc/network/interfaces.d/*
   lineinfile: dest=/etc/network/interfaces state=present line='source /etc/network/interfaces.d/*' insertbefore=BOF

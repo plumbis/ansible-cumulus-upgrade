@@ -8,9 +8,6 @@ interfaces:
       - name: "peerlink"
         members: ["swp7", "swp8"]
         clag_ip: "169.254.254.1"
-    clag_backup_link:
-      - name: "clag_backup_link"
-        members: ["swp9"]
     bond1:
       - name: "bond1"
         members: ["swp1", "swp2"]
@@ -31,9 +28,6 @@ interfaces:
       - name: "peerlink"
         members: ["swp7", "swp8"]
         clag_ip: "169.254.254.2"
-    clag_backup_link:
-      - name: "clag_backup_link"
-        members: ["swp9"]
     bond1:
       - name: "bond1"
         members: ["swp1", "swp2"]
@@ -150,49 +144,45 @@ addresses:
     clag_peer: "169.254.254.2"
     clag_mac: "44:38:39:ff:00:01"
     svi: "10.1.10.252/24"
-    clag_backup_ip: "172.1.10.253"
+    clag_backup_ip: "172.16.1.253"
+    clag_peer_backup_ip: "172.16.1.254"
   spine2:
     clag_ip: "169.254.254.2/30"
     clag_peer: "169.254.254.1"
     clag_mac: "44:38:39:ff:00:01"
     svi: "10.1.10.253/24"
-    clag_backup_ip: "172.1.10.252"
+    clag_backup_ip: "172.16.1.254"
+    clag_peer_backup_ip: "172.16.1.253"
   leaf1:
     clag_ip: "169.254.254.1/30"
     clag_peer: "169.254.254.2"
     clag_mac: "44:38:39:ff:00:02"
     svi: "10.1.10.1/24"
-    clag_backup_ip: "10.1.10.2"
   leaf2:
     clag_ip: "169.254.254.2/30"
     clag_peer: "169.254.254.1"
     clag_mac: "44:38:39:ff:00:02"
     svi: "10.1.10.2/24"
-    clag_backup_ip: "10.1.10.1"
   leaf3:
     clag_ip: "169.254.254.1/30"
     clag_peer: "169.254.254.2"
     clag_mac: "44:38:39:ff:00:03"
     svi: "10.1.10.3/24"
-    clag_backup_ip: "10.1.10.4"
   leaf4:
     clag_ip: "169.254.254.2/30"
     clag_peer: "169.254.254.1"
     clag_mac: "44:38:39:ff:00:03"
     svi: "10.1.10.4/24"
-    clag_backup_ip: "10.1.10.3"
   leaf5:
     clag_ip: "169.254.254.1/30"
     clag_peer: "169.254.254.2"
     clag_mac: "44:38:39:ff:00:04"
     svi: "10.1.10.5/24"
-    clag_backup_ip: "10.1.10.6"
   leaf6:
     clag_ip: "169.254.254.2/30"
     clag_peer: "169.254.254.1"
     clag_mac: "44:38:39:ff:00:04"
     svi: "10.1.10.6/24"
-    clag_backup_ip: "10.1.10.5"
   server1:
     vl1: "10.1.1.12"
     vl10: "10.1.10.12"
