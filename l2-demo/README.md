@@ -32,6 +32,10 @@ Deployment:
 
 Run the Ansible playbook with the command ansible-playbook two-tier-clag.yml.
 
+## The Backup Process
+From the l2-demo directory, run the configs-backup.yml playbook to backup interesting configuration files to the roles/* directory.
+If you run the leaf-upgrade.yml playbook, it will backup the interesting files as well as run through the software upgrade process.
+
 ## The Upgrade Process
 Each server is connected to two leafs. The leftmost leaf will be considered to be in an "A" group. The rightmost leaf will be considered to be in a "B" group. The upgrade process will be on a datacenter wide basis, meaning all "A" switches will be run in parallel, and the same for all "B" switches.
 

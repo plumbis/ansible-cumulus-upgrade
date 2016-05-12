@@ -3,16 +3,16 @@
   become: yes
   tasks:
     - name: copy ports.conf
-      copy: src=save/{{ansible_hostname}}/ports.conf dest=/etc/cumulus/
+      copy: src=roles/leafs/{{ansible_hostname}}/ports.conf dest=/etc/cumulus/
 
     - name: copy interfaces
-      copy: src=save/{{ansible_hostname}}/interfaces dest=/etc/network/
+      copy: src=roles/leafs/{{ansible_hostname}}/etc/network/interfaces.d/* dest=/etc/network/interfaces.d/
 
     - name: copy Quagga daemons
-      copy: src=save/{{ansible_hostname}}/daemons dest=/etc/quagga/
+      copy: src=roles/leafs/{{ansible_hostname}}/daemons dest=/etc/quagga/
 
     - name: copy Quagga conf
-      copy: src=save/{{ansible_hostname}}/Quagga.conf dest=/etc/quagga/
+      copy: src=roles/leafs/{{ansible_hostname}}/Quagga.conf dest=/etc/quagga/
 
     - name: reload switchd
       service: name=switchd state=restarted
@@ -22,3 +22,5 @@
 
     - name: reload quagga
       service: name=quagga state=restarted
+
+# playbook needs tested
