@@ -8,10 +8,10 @@
         src=/etc/cumulus/ports.conf
         flat=yes
 
-    - name: fetch interfaces
-      fetch:
-        dest=save/{{ansible_hostname}}/interfaces
-        src=/etc/network/interfaces
+    - name: copy interfaces.d directory
+      copy:
+        dest=save/{{ansible_hostname}}/interfaces.d/
+        src=/etc/network/interfacesd./
         flat=yes
 
     - name: copy quagga daemons file

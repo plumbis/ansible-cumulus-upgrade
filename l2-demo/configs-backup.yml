@@ -1,0 +1,33 @@
+---
+- hosts: network
+  become: yes
+  tasks:
+    - name: copy quagga daemons file
+      fetch:
+        dest=roles/leafs/{{ansible_hostname}}/daemons
+        src=/etc/quagga/daemons
+        flat=yes
+
+    - name: copy Quagga.conf
+      fetch:
+        dest=roles/leafs/{{ansible_hostname}}/Quagga.conf
+        src=/etc/quagga/Quagga.conf
+        flat=yes
+
+# the following line is a way to copy the entire /etc/network/interfaces.d directory into a backup location. 
+# syncronize module would be preferred, but won't work with Vagrant for test environments.
+# fetch module won't work as its only for copying single files, need to add the loop.
+
+    - name: List files in interfaces.d directory
+      shell: ls /etc/network/interfaces.d/
+      register: interfaces_files
+
+    - name: Fetch interfaces_files
+      fetch:
+        dest=roles/leafs/
+        src=/etc/network/interfaces.d/{{item}}
+      with_items: interfaces_files.stdout_lines
+
+#    - name: Copy interfaces from the remote switch and save to local drive
+#      synchronize: mode=pull src=/etc/network/interfaces.d dest=roles/leafs/{{ansible_hostname}}/interfaces.d
+#        recursive=yes
