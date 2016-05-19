@@ -1,14 +1,9 @@
 ---
-#- name: Check if route map is applied
-#  shell: vtysh -c "show run" | grep prepend | wc -l
-#  register: prepend_count
-
    - name: fetch ports.conf
      fetch:
        dest=roles/leafs/{{ansible_hostname}}/ports.conf
        src=/etc/cumulus/ports.conf
        flat=yes
-#   when: prepend_count.stdout | int < 3
 
    - name: copy quagga daemons file
      fetch:
@@ -22,7 +17,16 @@
        src=/etc/quagga/Quagga.conf
        flat=yes
 
-# the following line is a way to copy the entire /etc/network/interfaces.d directory into a backup location. 
+# The following line is the method to copy a SINGLE interfaces file to the ansible server as
+# a backup location. If using interfaces.d directory, use the next option in this file.
+
+#   - name: copy single interfaces file
+#     fetch:
+#       dest=roles/leafs/{{ansible_hostname}}/interfaces
+#       src=/etc/network/interfaces
+#       flat=yes
+
+# The following line is a way to copy the entire /etc/network/interfaces.d directory into a backup location. 
 # syncronize module would be preferred, but won't work with Vagrant for test environments.
 # fetch module won't work as its only for copying single files, need to add the loop.
 # syncronize option is listed and commented out
@@ -41,27 +45,19 @@
 #      synchronize: mode=pull src=/etc/network/interfaces.d dest=roles/leafs/{{ansible_hostname}}/interfaces.d
 #        recursive=yes
 
-# The reason for using cl-bgp commands instead of using a Quagga template
-# Is because then two quagga templates will have to be maintained
-# Probably a good candidate for a module, but this works for now.
-# A smarter way to do this would be to load from Vars file to identify
-# the names of the peer-groups. Again, good enough for proof of concept
-#- name: Apply route maps to drain traffic
-#  command: "{{item[0] | replace('%peer_group%', item[1])}}"
-#  with_nested:
-#    - ["cl-bgp route-map set prepend in neighbor %peer_group% ipv4 unicast",
-#       "cl-bgp route-map set prepend in neighbor %peer_group% ipv6 unicast",
-#       "cl-bgp route-map set prepend out neighbor %peer_group% ipv4 unicast",
-#       "cl-bgp route-map set prepend out neighbor %peer_group% ipv6 unicast"]
-#    - ["fabric", "servers"]
-#  when: prepend_count.stdout | int < 3
-#
-#- name: Save Quagga Config
-#  command: cl-rctl write-config integrated
-#  when: prepend_count.stdout | int < 3
-
 #- name: Verify traffic is drained. This will take a moment...
 #  interface_stats:
+
+# Fetch current working NOS version
+    - name: Show current Cumulus Linux version
+      shell: cat /etc/lsb-release
+
+# This step copies the new image to the switch
+
+    - name: Fetch the latest update meta-data from the repository
+      apt: update_cache=yes
+    - name: Upgrade all the packages to the latest distribution
+      apt: upgrade=dist
 
 # - name: Reboot!
 #   shell: sleep 2 && shutdown -r now "Ansible reboot triggered"
@@ -80,12 +76,6 @@
 # - name: load vars
 #   include_vars: roles/leafs/vars/main.yml
 
-# - name: Copy Quagga Configuration
-#   template:
-#     src=roles/leafs/templates/Quagga.conf.j2
-#     dest=/etc/quagga/Quagga.conf
-#   notify: reload quagga
-
 # - name: copy ports.conf
 #   copy: src=roles/leafs/{{ansible_hostname}}/ports.conf dest=/etc/cumulus/
 #   notify: restart switchd
@@ -98,6 +88,6 @@
 #   copy: src=roles/leafs/{{ansible_hostname}}/daemons dest=/etc/quagga/
 #   notify: restart quagga
 
-# - name: copy Quagga conf
+# - name: copy Quagga configuration file
 #   copy: src=roles/leafs/{{ansible_hostname}}/Quagga.conf dest=/etc/quagga/
 #   notify: reload quagga
