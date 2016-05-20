@@ -2,27 +2,43 @@
 - hosts: network
   become: yes
   tasks:
-    - name: copy quagga daemons file
+    - name: backup quagga daemons file
       fetch:
         dest=roles/leafs/{{ansible_hostname}}/daemons
         src=/etc/quagga/daemons
         flat=yes
 
-    - name: copy Quagga.conf
+    - name: backup Quagga.conf
       fetch:
         dest=roles/leafs/{{ansible_hostname}}/Quagga.conf
         src=/etc/quagga/Quagga.conf
         flat=yes
+        
+    - name: backup ports.conf
+      fetch:
+        dest=roles/leafs/{{ansible_hostname}}/ports.conf
+        src=/etc/cumulus/ports.conf
+        flat=yes
 
-# the following line is a way to copy the entire /etc/network/interfaces.d directory into a backup location. 
+# The following line is the method to copy a SINGLE interfaces file to the ansible server as
+# a backup location. If using interfaces.d directory, use the next option in this file.
+
+#   - name: backup single interfaces file
+#     fetch:
+#       dest=roles/leafs/{{ansible_hostname}}/interfaces
+#       src=/etc/network/interfaces
+#       flat=yes
+
+# The following line is a way to copy the entire /etc/network/interfaces.d directory into a backup location. 
 # syncronize module would be preferred, but won't work with Vagrant for test environments.
 # fetch module won't work as its only for copying single files, need to add the loop.
+# syncronize option is listed and commented out
 
     - name: List files in interfaces.d directory
       shell: ls /etc/network/interfaces.d/
       register: interfaces_files
 
-    - name: Fetch interfaces_files
+    - name: backup interfaces_files
       fetch:
         dest=roles/leafs/
         src=/etc/network/interfaces.d/{{item}}
