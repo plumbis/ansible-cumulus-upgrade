@@ -42,6 +42,6 @@ The following are a list of required software to run this project.
 
 # Helpful Links
 The following are helpful links with instruction to getting the environment up and running.
-* ** [Cumulus VX] (https://docs.cumulusnetworks.com/display/VX/Using+Cumulus+VX+with+Vagrant)** - This pages runs through how to setup the Vagrant environment for Cumulus VX, as well as how to do some basic navigation around Vagrant.
-* ** [Ansible Install](http://docs.ansible.com/ansible/intro_installation.html)** - Ansible Installation guide.
-* ** [Cumulus Ansible Modules] (https://support.cumulusnetworks.com/hc/en-us/articles/204255593-Ansible-Utilizing-Cumulus-Linux-Ansible-Modules)** Quick tutorial on how to use Cumulus Ansible Modules.
+* **[Cumulus VX](https://docs.cumulusnetworks.com/display/VX/Using+Cumulus+VX+with+Vagrant)** - This pages runs through how to setup the Vagrant environment for Cumulus VX, as well as how to do some basic navigation around Vagrant.
+* **[Ansible Install](http://docs.ansible.com/ansible/intro_installation.html)** - Ansible Installation guide.
+* **[Cumulus Ansible Modules](https://support.cumulusnetworks.com/hc/en-us/articles/204255593-Ansible-Utilizing-Cumulus-Linux-Ansible-Modules)** Quick tutorial on how to use Cumulus Ansible Modules.
