@@ -31,21 +31,20 @@ SVIs are configured on VLAN 10 on all switches. The Spine switches also have VRR
 The servers are configured with a VLAN 10 address and an address in the native VLAN (not pictured).
 
 IP Connectivity for VLAN 10:
-Server1         		  - 10.1.10.12
-Server2         		  - 10.1.10.34
-Server3         		  - 10.1.10.56
-Default Gateway (VRR) - 10.1.10.254
+* Server1         		  - 10.1.10.12
+* Server2         		  - 10.1.10.34
+* Server3         		  - 10.1.10.56
+* Default Gateway (VRR) - 10.1.10.254
 
 SVI IP's:
-leaf1  - 10.1.10.1
-leaf2  - 10.1.10.2
-leaf3  - 10.1.10.3
-leaf4  - 10.1.10.4
-leaf5  - 10.1.10.5
-leaf6  - 10.1.10.6
-spine1 - 10.1.10.252
-spine2 - 10.1.10.253
-
+* leaf1  - 10.1.10.1
+* leaf2  - 10.1.10.2
+* leaf3  - 10.1.10.3
+* leaf4  - 10.1.10.4
+* leaf5  - 10.1.10.5
+* leaf6  - 10.1.10.6
+* spine1 - 10.1.10.252
+* spine2 - 10.1.10.253
 
 Deployment:
 
