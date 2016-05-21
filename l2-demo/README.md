@@ -48,7 +48,7 @@ SVI IP's:
 
 Deployment:
 
-To build the network configuration, run the Ansible playbook with the command "ansible-playbook provision-l2demo.yml".
+To build the network configuration, run the Ansible playbook with the command "ansible-playbook provision.yml".
 
 ## The Backup Process
 If you simply want to backup configuration files from the networking devices, from the l2-demo directory, run the configs-backup.yml playbook to backup interesting configuration files to the roles/* directory.
@@ -58,10 +58,10 @@ If you run the leaf-upgrade.yml or spine-upgrade.yml playbooks, they will backup
 ## The Upgrade Process
 Each server is connected to two leafs. The leftmost leaf will be considered to be in an "A" group. The rightmost leaf will be considered to be in a "B" group. The upgrade process will be on a datacenter wide basis, meaning all "A" switches will be run in parallel, and the same for all "B" switches. The MLAG/CLAG priority is manipulated prior to upgrade to ensure as little packet loss as possible during the process.
 
-For the spine devices, the same principals will be used, but on a single spine at a time.
+For the spine devices, the same principals will be used.
 
 ## Configuration Recovery Process
-If you want to restore configuration files to the networking devices, from the l2-demo directory, run the leaf-config-restore.yml or spine-config-restore.yml playbook to copy the configuration files from the backup location to the networking devices.
+If you want to restore configuration files to the networking devices, from the l2-demo directory, run the leaf-config-restore.yml or spine-config-restore.yml playbooks to copy the configuration files from the backup location to the networking devices.
 
 ## Troubleshooting
 There are several troubleshooting playbooks included in this demo. To run the playbooks, simply "ansible-playbook 'insert playbook name here'. Be sure to run these playbooks from the l2-demo directory or direct Ansible to the correct inventory.
