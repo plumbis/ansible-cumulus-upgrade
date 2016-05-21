@@ -1,4 +1,0 @@
-auto br0.10
-iface br0.10
-	address 10.1.10.4/24
-

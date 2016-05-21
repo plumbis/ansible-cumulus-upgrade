@@ -1,5 +1,0 @@
-auto br0.10
-iface br0.10
-	address-virtual 00:11:22:33:44:55 10.1.10.254
-	address 10.1.10.252/24
-
