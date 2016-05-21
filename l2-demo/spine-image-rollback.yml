@@ -1,0 +1,8 @@
+---
+- name: rollback image on spines
+  hosts: spines
+  become: yes
+
+- include: roles/spines/tasks/rollback.yml
+  handlers:
+    - include: handlers/main.yml

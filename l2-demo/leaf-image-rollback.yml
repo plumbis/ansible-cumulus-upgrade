@@ -1,0 +1,8 @@
+---
+- name: rollback image on leafs
+  hosts: leafs
+  become: yes
+
+- include: roles/leafs/tasks/rollback.yml
+  handlers:
+    - include: handlers/main.yml

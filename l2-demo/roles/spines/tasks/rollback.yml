@@ -1,0 +1,8 @@
+---
+# Revert to standyby slot / previous image
+   - name: Revert Image Select
+     shell: sudo cl-img-select -s
+
+# Reboot to invoke previous image
+   - name: Revert Reboot
+     shell: sudo reboot
