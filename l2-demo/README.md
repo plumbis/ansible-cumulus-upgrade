@@ -65,3 +65,6 @@ If you want to restore configuration files to the networking devices, from the l
 
 ## Troubleshooting
 There are several troubleshooting playbooks included in this demo. To run the playbooks, simply "ansible-playbook 'insert playbook name here'. Be sure to run these playbooks from the l2-demo directory or direct Ansible to the correct inventory.
+
+## Image Rollback
+To rollback to the previous image, use the leaf/spine-image-rollback.yml playbooks. This playbook will revert to the standby slot (pre Cumulus Linux 3.0 only), and reboot the device. This playbook is not graceful, it is applied to the entire CLOS layer at the moment. Please use the --limit option when running the playbook to limit the rollback scope.
