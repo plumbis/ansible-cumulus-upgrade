@@ -1,0 +1,10 @@
+auto bond1
+iface bond1
+	clag-id 1
+	bond-miimon 100
+	bond-lacp-rate 1
+	bond-min-links 1
+	bond-slaves swp1 swp2
+	bond-mode 802.3ad
+	bond-xmit-hash-policy layer3+4
+

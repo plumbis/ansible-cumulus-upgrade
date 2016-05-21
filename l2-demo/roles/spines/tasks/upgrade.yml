@@ -45,8 +45,9 @@
 #      synchronize: mode=pull src=/etc/network/interfaces.d dest=roles/spines/{{ansible_hostname}}/interfaces.d
 #        recursive=yes
 
-#- name: Verify traffic is drained. This will take a moment...
-#  interface_stats:
+# Change CLAGD priority to peer
+   - name: Change CLAG priority to peer
+     shell: sudo clagctl priority 65000
 
 # Fetch current working NOS version
    - name: Show current Cumulus Linux version

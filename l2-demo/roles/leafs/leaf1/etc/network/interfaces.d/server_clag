@@ -1,0 +1,10 @@
+auto server_clag
+iface server_clag
+	clag-id 5
+	bond-miimon 100
+	bond-lacp-rate 1
+	bond-min-links 1
+	bond-slaves swp5
+	bond-mode 802.3ad
+	bond-xmit-hash-policy layer3+4
+

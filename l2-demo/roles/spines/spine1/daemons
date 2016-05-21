@@ -1,0 +1,6 @@
+#Configured via Ansible
+#butchered via KevinBash
+zebra=yes
+bgpd=yes
+ospfd=no
+ospf6d=no

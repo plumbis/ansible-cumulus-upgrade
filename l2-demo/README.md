@@ -56,7 +56,7 @@ If you simply want to backup configuration files from the networking devices, fr
 If you run the leaf-upgrade.yml or spine-upgrade.yml playbooks, they will backup the interesting files as well as run through the software upgrade process.
 
 ## The Upgrade Process
-Each server is connected to two leafs. The leftmost leaf will be considered to be in an "A" group. The rightmost leaf will be considered to be in a "B" group. The upgrade process will be on a datacenter wide basis, meaning all "A" switches will be run in parallel, and the same for all "B" switches.
+Each server is connected to two leafs. The leftmost leaf will be considered to be in an "A" group. The rightmost leaf will be considered to be in a "B" group. The upgrade process will be on a datacenter wide basis, meaning all "A" switches will be run in parallel, and the same for all "B" switches. The MLAG/CLAG priority is manipulated prior to upgrade to ensure as little packet loss as possible during the process.
 
 For the spine devices, the same principals will be used, but on a single spine at a time.
 

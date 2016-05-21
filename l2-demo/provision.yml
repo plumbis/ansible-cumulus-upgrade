@@ -1,6 +1,6 @@
 ---
 - hosts: spines
-  sudo: yes
+  become: yes
   roles:
     - common
     - spines
@@ -8,7 +8,7 @@
     - include: handlers/main.yml
 
 - hosts: leafs
-  sudo: yes
+  become: yes
   roles:
     - common
     - leafs
@@ -16,7 +16,7 @@
     - include: handlers/main.yml
 
 - hosts: servers
-  sudo: yes
+  become: yes
   roles:
     - servers
   handlers:

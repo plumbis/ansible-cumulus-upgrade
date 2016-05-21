@@ -1,0 +1,5 @@
+auto swp6
+iface swp6
+	alias clag_backup_link
+	address 172.16.1.33/30
+

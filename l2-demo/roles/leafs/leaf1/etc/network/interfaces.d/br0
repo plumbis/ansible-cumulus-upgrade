@@ -1,0 +1,8 @@
+auto br0
+iface br0
+	bridge-vlan-aware yes
+	bridge-ports peerlink bond1 server_clag
+	bridge-stp yes
+	bridge-pvid 1
+	bridge-vids 1-10
+

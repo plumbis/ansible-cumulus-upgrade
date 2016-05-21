@@ -1,0 +1,9 @@
+auto peerlink.4094
+iface peerlink.4094
+	clagd-priority 1000
+	clagd-enable yes
+	clagd-peer-ip 169.254.254.1
+	clagd-sys-mac 44:38:39:ff:00:02
+	clagd-args  --vm
+	address 169.254.254.2/30
+        clagd-backup-ip 172.16.1.1
