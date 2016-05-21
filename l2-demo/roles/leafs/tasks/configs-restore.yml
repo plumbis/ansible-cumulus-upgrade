@@ -1,0 +1,37 @@
+---
+# Run with sudo permissions locally.
+- hosts: leafs
+  become: yes
+  tasks:
+    - name: copy ports.conf
+      copy: src=../{{ansible_hostname}}/ports.conf dest=/etc/cumulus/
+      notify: restart switchd
+      ignore_errors: yes
+
+# Use the following lines to copy JUST the interfaces single file from the backup location
+# to the switchs
+#    - name: copy interfaces
+#      copy: src=../{{ansible_hostname}}/interfaces dest=/etc/network/
+#      notify: reload networking
+
+# Use the following lines (instead of the previous section) to coyp the interfaces.d directory
+# from the backup location to the switches. This includes the next 2 "name:" sections.
+    - name: List files in interfaces.d directory
+      local_action: command ls ../{{ansible_hostname}}/etc/network/interfaces.d/
+      register: interfaces_files
+
+    - name: copy interfaces.d directory files
+      copy: src=../{{ansible_hostname}}/etc/network/interfaces.d/{{item}} dest=/etc/network/interfaces.d/
+      with_items: interfaces_files.stdout_lines
+      notify: reload networking
+      ignore_errors: yes
+      
+    - name: copy Quagga daemons
+      copy: src=../{{ansible_hostname}}/daemons dest=/etc/quagga/
+      notify: restart quagga
+      ignore_errors: yes
+
+    - name: copy Quagga configuration file
+      copy: src=../{{ansible_hostname}}/Quagga.conf dest=/etc/quagga/
+      notify: reload quagga
+      ignore_errors: yes

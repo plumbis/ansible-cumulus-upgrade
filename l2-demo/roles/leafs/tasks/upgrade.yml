@@ -49,32 +49,20 @@
 #  interface_stats:
 
 # Fetch current working NOS version
-    - name: Show current Cumulus Linux version
-      shell: cat /etc/lsb-release
+   - name: Show current Cumulus Linux version
+     shell: cat /etc/lsb-release
 
 # This step copies the new image to the switch
 
-    - name: Fetch the latest update meta-data from the repository
-      apt: update_cache=yes
-    - name: Upgrade all the packages to the latest distribution
-      apt: upgrade=dist
-
-
-# - name: load vars
-#   include_vars: roles/leafs/vars/main.yml
-
-# - name: copy ports.conf
-#   copy: src=roles/leafs/{{ansible_hostname}}/ports.conf dest=/etc/cumulus/
-#   notify: restart switchd
-
-# - name: copy interfaces
-#   copy: src=roles/leafs/{{ansible_hostname}}/interfaces dest=/etc/network/
-#   notify: reload networking
-
-# - name: copy Quagga daemons
-#   copy: src=roles/leafs/{{ansible_hostname}}/daemons dest=/etc/quagga/
-#   notify: restart quagga
-
-# - name: copy Quagga configuration file
-#   copy: src=roles/leafs/{{ansible_hostname}}/Quagga.conf dest=/etc/quagga/
-#   notify: reload quagga
+   - name: Fetch the latest update meta-data from the repository
+     apt: update_cache=yes
+   - name: Upgrade all the packages to the latest distribution
+     apt: upgrade=dist
+     
+   - name: Waiting for leafs to restore. Please stand by...
+     local_action:
+       wait_for
+       host={{ansible_ssh_host}}
+       port={{ ansible_ssh_port }}
+       delay=60
+     become: False

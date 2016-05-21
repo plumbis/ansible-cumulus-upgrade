@@ -1,0 +1,8 @@
+---
+- name: restore configuration on spines
+  hosts: leafs
+  become: yes
+  
+- include: roles/spines/tasks/configs-restore.yml
+  handlers:
+    - include: handlers/main.yml

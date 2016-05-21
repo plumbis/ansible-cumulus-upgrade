@@ -29,3 +29,9 @@
 
 - name: start clcmd_server
   service: name=clcmd_server state=started enabled=yes
+  
+- name: restart switchd
+  service: name=switchd state=restarted
+  
+- name: restart quagga
+  service: name=quagga state=restarted

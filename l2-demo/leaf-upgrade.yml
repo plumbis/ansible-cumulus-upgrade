@@ -6,14 +6,6 @@
   handlers:
     - include: handlers/main.yml
 
-- name: Waiting for a-leafs to restore. Please stand by...
-  local_action:
-    wait_for
-    host={{ansible_ssh_host}}
-    port={{ ansible_ssh_port }}
-    delay=60
-  become: False
-
 - hosts: b-leafs
   become: yes
   tasks:

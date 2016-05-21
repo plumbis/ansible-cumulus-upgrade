@@ -1,19 +1,19 @@
 ---
    - name: fetch ports.conf
      fetch:
-       dest=roles/leafs/{{ansible_hostname}}/ports.conf
+       dest=roles/spines/{{ansible_hostname}}/ports.conf
        src=/etc/cumulus/ports.conf
        flat=yes
 
    - name: copy quagga daemons file
      fetch:
-       dest=roles/leafs/{{ansible_hostname}}/daemons
+       dest=roles/spines/{{ansible_hostname}}/daemons
        src=/etc/quagga/daemons
        flat=yes
 
    - name: copy Quagga.conf
      fetch:
-       dest=roles/leafs/{{ansible_hostname}}/Quagga.conf
+       dest=roles/spines/{{ansible_hostname}}/Quagga.conf
        src=/etc/quagga/Quagga.conf
        flat=yes
 
@@ -22,7 +22,7 @@
 
 #   - name: copy single interfaces file
 #     fetch:
-#       dest=roles/leafs/{{ansible_hostname}}/interfaces
+#       dest=roles/spines/{{ansible_hostname}}/interfaces
 #       src=/etc/network/interfaces
 #       flat=yes
 
@@ -37,24 +37,32 @@
 
    - name: Fetch interfaces_files
      fetch:
-       dest=roles/leafs/
+       dest=roles/spines/
        src=/etc/network/interfaces.d/{{item}}
      with_items: interfaces_files.stdout_lines
 
 #    - name: Copy interfaces from the remote switch and save to local drive
-#      synchronize: mode=pull src=/etc/network/interfaces.d dest=roles/leafs/{{ansible_hostname}}/interfaces.d
+#      synchronize: mode=pull src=/etc/network/interfaces.d dest=roles/spines/{{ansible_hostname}}/interfaces.d
 #        recursive=yes
 
 #- name: Verify traffic is drained. This will take a moment...
 #  interface_stats:
 
 # Fetch current working NOS version
-    - name: Show current Cumulus Linux version
-      shell: cat /etc/lsb-release
+   - name: Show current Cumulus Linux version
+     shell: cat /etc/lsb-release
 
 # This step copies the new image to the switch
 
-    - name: Fetch the latest update meta-data from the repository
-      apt: update_cache=yes
-    - name: Upgrade all the packages to the latest distribution
-      apt: upgrade=dist
+   - name: Fetch the latest update meta-data from the repository
+     apt: update_cache=yes
+   - name: Upgrade all the packages to the latest distribution
+     apt: upgrade=dist
+     
+   - name: Waiting for spines to restore. Please stand by...
+     local_action:
+       wait_for
+       host={{ansible_ssh_host}}
+       port={{ ansible_ssh_port }}
+       delay=60
+     become: False

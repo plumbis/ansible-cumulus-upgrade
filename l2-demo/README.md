@@ -61,4 +61,7 @@ Each server is connected to two leafs. The leftmost leaf will be considered to b
 For the spine devices, the same principals will be used, but on a single spine at a time.
 
 ## Configuration Recovery Process
-If you want to restore configuration files to the networking devices, from the l2-demo directory, run the configs-restore.yml playbook to copy the configuration files from the backup location to the networking devices.
+If you want to restore configuration files to the networking devices, from the l2-demo directory, run the leaf-config-restore.yml or spine-config-restore.yml playbook to copy the configuration files from the backup location to the networking devices.
+
+## Troubleshooting
+There are several troubleshooting playbooks included in this demo. To run the playbooks, simply "ansible-playbook 'insert playbook name here'. Be sure to run these playbooks from the l2-demo directory or direct Ansible to the correct inventory.

@@ -1,0 +1,8 @@
+---
+- name: restore configuration on leafs
+  hosts: leafs
+  become: yes
+  
+- include: roles/leafs/tasks/configs-restore.yml
+  handlers:
+    - include: handlers/main.yml
