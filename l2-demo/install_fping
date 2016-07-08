@@ -1,0 +1,10 @@
+---
+# This playbook installs fping on servers for traffic generation.
+- hosts: servers
+  become: yes
+  tasks:
+    - name: Add Debian Apt Sources
+      apt_repository: repo='deb http://ftp.us.debian.org/debian/ wheezy main contrib non-free'
+
+    - name: Install FPing
+      apt: name=fping update_cache=yes
